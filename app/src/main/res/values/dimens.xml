@@ -1,0 +1,16 @@
+<resources>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="margin_padding_xtiny">6dp</dimen>
+    <dimen name="margin_padding_small">9dp</dimen>
+    <dimen name="margin_padding_xsmall">12dp</dimen>
+    <dimen name="margin_padding_normal">15dp</dimen>
+    <dimen name="margin_padding_xnormal">20dp</dimen>
+    <dimen name="margin_padding_xxnormal">25dp</dimen>
+    <dimen name="margin_padding_large">30dp</dimen>
+    <dimen name="margin_padding_xlarge">40dp</dimen>
+    <dimen name="margin_padding_xxlarge">50dp</dimen>
+    <dimen name="margin_large">70dp</dimen>
+    <dimen name="spacing">9dp</dimen>
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+</resources>
