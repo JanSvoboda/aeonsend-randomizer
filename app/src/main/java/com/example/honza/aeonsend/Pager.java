@@ -5,7 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.example.honza.aeonsend.fragments.CharactersFragment;
-import com.example.honza.aeonsend.fragments.SupplyCardsFragment;
+import com.example.honza.aeonsend.fragments.MarketFragment;
 import com.example.honza.aeonsend.fragments.NemesisFragment;
 
 /**
@@ -37,8 +37,8 @@ public class Pager extends FragmentStatePagerAdapter {
                 CharactersFragment charactersFragment = new CharactersFragment();
                 return charactersFragment;
             case 2:
-                SupplyCardsFragment supplyCardsFragment = new SupplyCardsFragment();
-                return supplyCardsFragment;
+                MarketFragment marketFragment = new MarketFragment();
+                return marketFragment;
             default:
                 return null;
         }

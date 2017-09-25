@@ -10,13 +10,13 @@
         android:layout_height="wrap_content"
         android:src="@drawable/nemesis_rageborn"
         android:layout_gravity="center_horizontal"
-        android:layout_margin="5dp"/>
+        android:layout_margin="2dp"/>
 
     <TextView
         android:id="@+id/nemesis_fragment_text_setup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Setup"
+        android:text="@string/nemesis_setup"
         android:textAllCaps="true"
         android:textStyle="bold"
         android:layout_gravity="center_horizontal"

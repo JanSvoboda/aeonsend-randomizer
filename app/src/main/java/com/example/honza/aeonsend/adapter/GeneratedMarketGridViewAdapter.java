@@ -6,28 +6,29 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.honza.aeonsend.R;
-import com.example.honza.aeonsend.cards.CharacterCard;
+import com.example.honza.aeonsend.cards.Card;
 import com.example.honza.aeonsend.utils.Constants;
 
 /**
  * Created by honza on 25.9.17.
  */
 
-public class CharacterGridViewAdapter extends BaseAdapter {
+public class GeneratedMarketGridViewAdapter extends BaseAdapter {
 
     private Context mContext;
-    private CharacterCard[] characterCards;
+    private Card[] cards;
 
-    public CharacterGridViewAdapter(Context mContext, CharacterCard[] characterCards) {
+    public GeneratedMarketGridViewAdapter(Context mContext, Card[] cards) {
         this.mContext = mContext;
-        this.characterCards = characterCards;
+        this.cards = cards;
     }
 
     @Override
     public int getCount() {
-        return characterCards.length;
+        return cards.length;
     }
 
     @Override
@@ -44,7 +45,7 @@ public class CharacterGridViewAdapter extends BaseAdapter {
     public View getView(int position, View view, ViewGroup viewGroup) {
 
         // Get view for one character card
-        CharacterCard characterCard = characterCards[position];
+        Card card = cards[position];
 
         if (view == null) {
             final LayoutInflater layoutInflater = LayoutInflater.from(mContext);
@@ -52,7 +53,9 @@ public class CharacterGridViewAdapter extends BaseAdapter {
         }
         // TODO bullshit value
         final ImageView imageView = view.findViewById(R.id.fragment_gridview_image);
-        imageView.setImageResource(view.getResources().getIdentifier(characterCard.getPicture(), Constants.DRAWABLEDEFTYPE, Constants.PACKAGENAME));
+//        final TextView textView = view.findViewById(R.id.fragment_gridview_text);
+        imageView.setImageResource(view.getResources().getIdentifier(card.getPicture(), Constants.DRAWABLEDEFTYPE, Constants.PACKAGENAME));
+//        textView.setText(card.getName());
 
         return view;
     }

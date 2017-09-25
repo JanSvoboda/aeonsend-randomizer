@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.GridView;
 
 import com.example.honza.aeonsend.R;
-import com.example.honza.aeonsend.adapter.CharacterGridViewAdapter;
+import com.example.honza.aeonsend.adapter.GeneratedMarketGridViewAdapter;
 import com.example.honza.aeonsend.cards.CharacterCard;
 import com.example.honza.aeonsend.database.CardList;
 
@@ -20,7 +20,7 @@ import com.example.honza.aeonsend.database.CardList;
 public class CharactersFragment extends Fragment {
 
     private GridView gridView;
-    private CharacterGridViewAdapter characterGridViewAdapter;
+    private GeneratedMarketGridViewAdapter generatedMarketGridViewAdapter;
 
     @Nullable
     @Override
@@ -37,8 +37,8 @@ public class CharactersFragment extends Fragment {
         View view = inflater.inflate(R.layout.characters_fragment, container, false);
 
         gridView = view.findViewById(R.id.characters_fragment_gridview);
-        characterGridViewAdapter = new CharacterGridViewAdapter(view.getContext(), characterCards);
-        gridView.setAdapter(characterGridViewAdapter);
+        generatedMarketGridViewAdapter = new GeneratedMarketGridViewAdapter(view.getContext(), characterCards);
+        gridView.setAdapter(generatedMarketGridViewAdapter);
 
         return view;
     }

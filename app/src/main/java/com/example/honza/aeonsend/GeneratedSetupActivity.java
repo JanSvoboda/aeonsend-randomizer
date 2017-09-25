@@ -35,7 +35,7 @@ public class GeneratedSetupActivity extends AppCompatActivity implements TabLayo
 
         tabLayout.addTab(tabLayout.newTab().setText("Nemesis"));
         tabLayout.addTab(tabLayout.newTab().setText("Characters"));
-        tabLayout.addTab(tabLayout.newTab().setText("Cards"));
+        tabLayout.addTab(tabLayout.newTab().setText("Market"));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         //Initializing viewPager
