@@ -5,7 +5,7 @@ package com.example.honza.aeonsend.enums;
  */
 
 public enum TableColumns {
-    KEY_ID("id"), KEY_NAME("name"), KEY_TYPE("type"), KEY_PRICE("price"), KEY_PICTURE("picture");
+    KEY_ID("id"), KEY_NAME("name"), KEY_TYPE("type"), KEY_PRICE("price"), KEY_PICTURE("picture"), KEY_EXPANSION("expansion"), KEY_SETUPDESCRIPTION("setup_description");
 
     private String value;
 

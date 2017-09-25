@@ -1,13 +1,17 @@
 package com.example.honza.aeonsend;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewStub;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ListView;
 
@@ -15,7 +19,7 @@ import com.example.honza.aeonsend.adapter.MarketGridViewAdapter;
 import com.example.honza.aeonsend.adapter.MarketListViewAdapter;
 import com.example.honza.aeonsend.database.MarketCardList;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity  {
 
     private ViewStub stubGrid;
     private ViewStub stubList;
@@ -28,6 +32,10 @@ public class MainActivity extends AppCompatActivity {
 
     static final int VIEW_MODE_LISTVIEW = 0;
     static final int VIEW_MODE_GRIDVIEW = 1;
+
+    // Setup for TabLayout
+    private TabLayout tabLayout;
+    private ViewPager viewPager;
 
 
     @Override
@@ -52,16 +60,24 @@ public class MainActivity extends AppCompatActivity {
 
         switchView();
 
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(view.getContext(), GeneratedSetupActivity.class);
+                startActivity(intent);
+            }
+        });
 
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(view.getContext(), GeneratedSetupActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
+
     }
 
     @Override

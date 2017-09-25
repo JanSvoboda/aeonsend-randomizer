@@ -11,6 +11,8 @@ public enum PriceRange {
     FOUR(4,4, "4"),
     FIVE(5,5, "5"),
     SIX(6,6, "6"),
+    SEVEN(7,7, "7"),
+    NULL(0,0, "0"),
     LESSTHANFOUR(0,3, "<4"),
     LESSTHANFIVE(0,4, "<5"),
     LESSTHANSIX(0,5, "<6"),

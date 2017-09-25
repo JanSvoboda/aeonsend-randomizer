@@ -3,6 +3,8 @@ package com.example.honza.aeonsend.cards;
 import android.database.Cursor;
 
 import com.example.honza.aeonsend.enums.CardType;
+import com.example.honza.aeonsend.enums.Expansion;
+import com.example.honza.aeonsend.enums.PriceRange;
 import com.example.honza.aeonsend.enums.TableColumns;
 
 /**
@@ -13,20 +15,23 @@ public class Card {
     private int id;
     private String name;
     private CardType type;
-    protected int price;
+    protected PriceRange price;
     private String picture;
+    private Expansion expansion;
 
-    public Card(int id, String name, CardType type, String picture) {
+    public Card(int id, String name, CardType type, String picture, Expansion expansion) {
         this.id = id;
         this.name = name;
         this.type = type;
         this.picture = picture;
+        this.expansion = expansion;
     }
 
-    public Card(String name, CardType type, String picture) {
+    public Card(String name, CardType type, String picture, Expansion expansion) {
         this.name = name;
         this.type = type;
         this.picture = picture;
+        this.expansion = expansion;
     }
 
     public int getId() {
@@ -53,11 +58,11 @@ public class Card {
         this.type = type;
     }
 
-    public int getPrice() {
+    public PriceRange getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(PriceRange price) {
         this.price = price;
     }
 
@@ -69,28 +74,38 @@ public class Card {
         this.picture = picture;
     }
 
+    public Expansion getExpansion() {
+        return expansion;
+    }
+
+    public void setExpansion(Expansion expansion) {
+        this.expansion = expansion;
+    }
+
     public static Card getCardFromCursor(Cursor cursor) throws Exception {
         int id = cursor.getInt(cursor.getColumnIndex(TableColumns.KEY_ID.getValue()));
         String name = cursor.getString(cursor.getColumnIndex(TableColumns.KEY_NAME.getValue()));
         CardType type = CardType.valueOf(cursor.getString(cursor.getColumnIndex(TableColumns.KEY_TYPE.getValue())));
-        int price = cursor.getInt(cursor.getColumnIndex(TableColumns.KEY_PRICE.getValue()));
+        PriceRange price = PriceRange.valueOf(cursor.getString(cursor.getColumnIndex(TableColumns.KEY_PRICE.getValue())));
         String picture = cursor.getString(cursor.getColumnIndex(TableColumns.KEY_PICTURE.getValue()));
+        Expansion expansion = Expansion.valueOf(cursor.getString(cursor.getColumnIndex(TableColumns.KEY_EXPANSION.getValue())));
+        String setupDescription = cursor.getString(cursor.getColumnIndex(TableColumns.KEY_SETUPDESCRIPTION.getValue()));
 
         switch (type) {
             case CHARACTER:
-                return new CharacterCard(id, name, type, picture);
+                return new CharacterCard(id, name, type, picture, expansion);
 
             case NEMESIS:
-                return new NemesisCard(id, name, type, picture);
+                return new NemesisCard(id, name, type, picture, expansion, setupDescription);
 
             case GEM:
-                return new GemCard(id, name, type, picture, price);
+                return new GemCard(id, name, type, picture, price, expansion);
 
             case RELIC:
-                return new RelicCard(id, name, type, picture, price);
+                return new RelicCard(id, name, type, picture, price, expansion);
 
             case SPELL:
-                return new SpellCard(id, name, type, picture, price);
+                return new SpellCard(id, name, type, picture, price, expansion);
 
             default:
                 throw new Exception("Unknown type of card. Type in DB is: " + type.getValue());

@@ -44,32 +44,27 @@ public class DatabaseHandler extends SQLiteOpenHelper implements CardDAO {
         sqLiteDatabase.execSQL(CreateSQLString());
 
         //Enter characters into DB
-        for (String[] cardValues : CardList.getBasicCharacterCardList()) {
-            Card card = new CharacterCard(cardValues[0], CardType.valueOf(cardValues[1]), cardValues[3]);
+        for (Card card : CardList.getBasicCharacterCardList()) {
             addCard(card);
         }
 
         //Enter nemesis into DB
-        for (String[] cardValues : CardList.getBasicNemesisCardList()) {
-            Card card = new NemesisCard(cardValues[0], CardType.valueOf(cardValues[1]), cardValues[3]);
+        for (Card card : CardList.getBasicNemesisCardList()) {
             addCard(card);
         }
 
         //Enter gems into DB
-        for (String[] cardValues : CardList.getBasicGemCardList()) {
-            Card card = new GemCard(cardValues[0], CardType.valueOf(cardValues[1]), cardValues[3], Integer.valueOf(cardValues[2]));
+        for (Card card : CardList.getBasicGemCardList()) {
             addCard(card);
         }
 
         //Enter relic into DB
-        for (String[] cardValues : CardList.getBasicRelicCardList()) {
-            Card card = new RelicCard(cardValues[0], CardType.valueOf(cardValues[1]), cardValues[3], Integer.valueOf(cardValues[2]));
+        for (Card card : CardList.getBasicRelicCardList()) {
             addCard(card);
         }
 
         //Enter spells into DB
-        for (String[] cardValues : CardList.getBasicSpellCardList()) {
-            Card card = new SpellCard(cardValues[0], CardType.valueOf(cardValues[1]), cardValues[3], Integer.valueOf(cardValues[2]));
+        for (Card card : CardList.getBasicSpellCardList()) {
             addCard(card);
         }
     }
@@ -87,7 +82,7 @@ public class DatabaseHandler extends SQLiteOpenHelper implements CardDAO {
 
         values.put(TableColumns.KEY_NAME.getValue(), card.getName());
         values.put(TableColumns.KEY_TYPE.getValue(), card.getType().getValue());
-        values.put(TableColumns.KEY_PRICE.getValue(), card.getPrice());
+        values.put(TableColumns.KEY_PRICE.getValue(), card.getPrice().toString());
         values.put(TableColumns.KEY_PICTURE.getValue(), card.getId());
 
         db.insert(tableName, null, values);
@@ -148,7 +143,7 @@ public class DatabaseHandler extends SQLiteOpenHelper implements CardDAO {
 
         values.put(TableColumns.KEY_NAME.getValue(), card.getName());
         values.put(TableColumns.KEY_TYPE.getValue(), card.getType().getValue());
-        values.put(TableColumns.KEY_PRICE.getValue(), card.getPrice());
+        values.put(TableColumns.KEY_PRICE.getValue(), card.getPrice().toString());
         values.put(TableColumns.KEY_PICTURE.getValue(), card.getId());
 
         try {

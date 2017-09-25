@@ -1,105 +1,110 @@
 package com.example.honza.aeonsend.database;
 
+import com.example.honza.aeonsend.cards.CharacterCard;
+import com.example.honza.aeonsend.cards.GemCard;
+import com.example.honza.aeonsend.cards.NemesisCard;
+import com.example.honza.aeonsend.cards.RelicCard;
+import com.example.honza.aeonsend.cards.SpellCard;
 import com.example.honza.aeonsend.enums.CardType;
-import com.example.honza.aeonsend.enums.Expansions;
+import com.example.honza.aeonsend.enums.Expansion;
+import com.example.honza.aeonsend.enums.PriceRange;
 
 /**
  * Created by honza on 6.9.17.
  */
 
 public class CardList {
-    private static String[][] basicCharacterCardList = {
-            {"Adelheim", CardType.CHARACTER.getValue(), "0", "character_adelheim.jpg", String.valueOf(Expansions.BASIC.getValue())},
-            {"Brama", CardType.CHARACTER.getValue(), "0", "character_brama.jpg", String.valueOf(Expansions.BASIC.getValue())},
-            {"Jian", CardType.CHARACTER.getValue(), "0", "character_jian.jpg", String.valueOf(Expansions.BASIC.getValue())},
-            {"Kadir", CardType.CHARACTER.getValue(), "0", "character_kadir.jpg", String.valueOf(Expansions.BASIC.getValue())},
-            {"Lash", CardType.CHARACTER.getValue(), "0", "character_lash.jpg", String.valueOf(Expansions.BASIC.getValue())},
-            {"Mist", CardType.CHARACTER.getValue(), "0", "character_mist.jpg", String.valueOf(Expansions.BASIC.getValue())},
-            {"Phaedraxa", CardType.CHARACTER.getValue(), "0", "character_phaedraxa.jpg", String.valueOf(Expansions.BASIC.getValue())},
-            {"Xaxos", CardType.CHARACTER.getValue(), "0", "character_xaxos.jpg", String.valueOf(Expansions.BASIC.getValue())},
-
+    private static CharacterCard[] basicCharacterCardList = {
+            new CharacterCard("Adelheim", CardType.CHARACTER, "character_adelheim", Expansion.BASIC),
+            new CharacterCard("Brama", CardType.CHARACTER, "character_brama", Expansion.BASIC),
+            new CharacterCard("Jian", CardType.CHARACTER, "character_jian", Expansion.BASIC),
+            new CharacterCard("Kadir", CardType.CHARACTER, "character_kadir", Expansion.BASIC),
+            new CharacterCard("Lash", CardType.CHARACTER, "character_lash", Expansion.BASIC),
+            new CharacterCard("Mist", CardType.CHARACTER, "character_mist", Expansion.BASIC),
+            new CharacterCard("Phaedraxa", CardType.CHARACTER, "character_phaedraxa", Expansion.BASIC),
+            new CharacterCard("Xaxos", CardType.CHARACTER, "character_xaxos", Expansion.BASIC)
     };
 
-    private static String[][] basicNemesisCardList = {
-            {"Carapace Queen", CardType.NEMESIS.getValue(), "0", "nemesis_carapacequeen.jpg", String.valueOf(Expansions.BASIC.getValue())},
-            {"Crooked Mask", CardType.NEMESIS.getValue(), "0", "nemesis_crookedmask.jpg", String.valueOf(Expansions.BASIC.getValue())},
-            {"Prince of Gluttons", CardType.NEMESIS.getValue(), "0", "nemesis_princeofgluttons.jpg", String.valueOf(Expansions.BASIC.getValue())},
-            {"Rageborn", CardType.NEMESIS.getValue(), "0", "nemesis_rageborn.jpg", String.valueOf(Expansions.BASIC.getValue())},
+    private static NemesisCard[] basicNemesisCardList = {
+            new NemesisCard("Carapace Queen", CardType.NEMESIS, "nemesis_carapacequeen", Expansion.BASIC, ""),
+            new NemesisCard("Crooked Mask", CardType.NEMESIS, "nemesis_crookedmask", Expansion.BASIC, ""),
+            new NemesisCard("Prince of Gluttons", CardType.NEMESIS, "nemesis_princeofgluttons", Expansion.BASIC, ""),
+            new NemesisCard("Rageborn", CardType.NEMESIS, "nemesis_rageborn", Expansion.BASIC, "Shuffle all of the Strike cards together and place them facedown to form the strike deck. Rageborn gains one Fury.")
     };
 
-    private static String[][] basicGemCardList = {
-            {"Burning Opal", CardType.GEM.getValue(), "5", "gem_burningopal.jpg", String.valueOf(Expansions.BASIC.getValue())},
-            {"Clouded Sapphire", CardType.GEM.getValue(), "6", "gem_cloudedsapphire.jpg", String.valueOf(Expansions.BASIC.getValue())},
-            {"Diamond Cluster", CardType.GEM.getValue(), "4", "gem_diamondcluster.jpg", String.valueOf(Expansions.BASIC.getValue())},
-            {"Jade", CardType.GEM.getValue(), "2", "gem_jade.jpg", String.valueOf(Expansions.BASIC.getValue())},
-            {"Searing Ruby", CardType.GEM.getValue(), "4", "gem_searingruby.jpg", String.valueOf(Expansions.BASIC.getValue())},
-            {"Sifter's Pearl", CardType.GEM.getValue(), "3", "gem_sifterspearl.jpg", String.valueOf(Expansions.BASIC.getValue())},
-            {"V'riswood Amber", CardType.GEM.getValue(), "3", "gem_vriswoodamber.jpg", String.valueOf(Expansions.BASIC.getValue())},
+    private static GemCard[] basicGemCardList = {
+            new GemCard("Burning Opal", CardType.GEM, "gem_burningopal", PriceRange.FIVE, Expansion.BASIC),
+            new GemCard("Clouded Sapphire", CardType.GEM, "gem_cloudedsapphire", PriceRange.SIX, Expansion.BASIC),
+            new GemCard("Diamond Cluster", CardType.GEM, "gem_diamondcluster", PriceRange.FOUR, Expansion.BASIC),
+            new GemCard("Jade", CardType.GEM, "gem_jade", PriceRange.TWO, Expansion.BASIC),
+            new GemCard("Searing Ruby", CardType.GEM, "gem_searingruby", PriceRange.FOUR, Expansion.BASIC),
+            new GemCard("Sifter's Pearl", CardType.GEM, "gem_sifterspearl", PriceRange.THREE, Expansion.BASIC),
+            new GemCard("V'riswood Amber", CardType.GEM, "gem_vriswoodamber", PriceRange.THREE, Expansion.BASIC)
     };
 
-    private static String[][] basicRelicCardList = {
-            {"Blasting Staff", CardType.RELIC.getValue(), "4", "relic_blastingstaff.jpg", String.valueOf(Expansions.BASIC.getValue())},
-            {"Bottled Vortex", CardType.RELIC.getValue(), "3", "relic_bottledvortex.jpg", String.valueOf(Expansions.BASIC.getValue())},
-            {"Flexing Dagger", CardType.RELIC.getValue(), "2", "relic_flexingdagger.jpg", String.valueOf(Expansions.BASIC.getValue())},
-            {"Focusing Orb", CardType.RELIC.getValue(), "4", "relic_focusingorb.jpg", String.valueOf(Expansions.BASIC.getValue())},
-            {"Mage's Talisman", CardType.RELIC.getValue(), "5", "relic_magestalisman.jpg", String.valueOf(Expansions.BASIC.getValue())},
-            {"Unstable Prism", CardType.RELIC.getValue(), "3", "relic_unstableprism.jpg", String.valueOf(Expansions.BASIC.getValue())},
+    private static RelicCard[] basicRelicCardList = {
+            new RelicCard("Blasting Staff", CardType.RELIC, "relic_blastingstaff", PriceRange.FOUR, Expansion.BASIC),
+            new RelicCard("Bottled Vortex", CardType.RELIC, "relic_bottledvortex", PriceRange.THREE, Expansion.BASIC),
+            new RelicCard("Flexing Dagger", CardType.RELIC, "relic_flexingdagger", PriceRange.TWO, Expansion.BASIC),
+            new RelicCard("Focusing Orb", CardType.RELIC, "relic_focusingorb", PriceRange.FOUR, Expansion.BASIC),
+            new RelicCard("Mage's Talisman", CardType.RELIC, "relic_magestalisman", PriceRange.FIVE, Expansion.BASIC),
+            new RelicCard("Unstable Prism", CardType.RELIC, "relic_unstableprism", PriceRange.THREE, Expansion.BASIC)
     };
 
-    private static String[][] basicSpellCardList = {
-            {"Amplify Vision", CardType.SPELL.getValue(), "4", "spell_amplifyvision.jpg", String.valueOf(Expansions.BASIC.getValue())},
-            {"Arcane Nexus", CardType.SPELL.getValue(), "7", "spell_arcanenexus.jpg", String.valueOf(Expansions.BASIC.getValue())},
-            {"Consuming Void", CardType.SPELL.getValue(), "7", "spell_consumingvoid.jpg", String.valueOf(Expansions.BASIC.getValue())},
-            {"Dark Fire", CardType.SPELL.getValue(), "5", "spell_darkfire.jpg", String.valueOf(Expansions.BASIC.getValue())},
-            {"Essence Theft", CardType.SPELL.getValue(), "5", "spell_essencetheft.jpg", String.valueOf(Expansions.BASIC.getValue())},
-            {"Feral Lightning", CardType.SPELL.getValue(), "5", "spell_ferallightning.jpg", String.valueOf(Expansions.BASIC.getValue())},
-            {"Chaos Arc", CardType.SPELL.getValue(), "6", "spell_chaosarc.jpg", String.valueOf(Expansions.BASIC.getValue())},
-            {"Ignite", CardType.SPELL.getValue(), "4", "spell_ignite.jpg", String.valueOf(Expansions.BASIC.getValue())},
-            {"Lavatendril", CardType.SPELL.getValue(), "4", "spell_lavatendril.jpg", String.valueOf(Expansions.BASIC.getValue())},
-            {"Oblivion Swell", CardType.SPELL.getValue(), "5", "spell_oblivionswell.jpg", String.valueOf(Expansions.BASIC.getValue())},
-            {"Phoenix Flame", CardType.SPELL.getValue(), "3", "spell_phoenixflame.jpg", String.valueOf(Expansions.BASIC.getValue())},
-            {"Planar Insight", CardType.SPELL.getValue(), "6", "spell_planarinsight.jpg", String.valueOf(Expansions.BASIC.getValue())},
-            {"Spectral Echo", CardType.SPELL.getValue(), "3", "spell_spectralecho.jpg", String.valueOf(Expansions.BASIC.getValue())},
-            {"Wildfire Whip", CardType.SPELL.getValue(), "6", "spell_wildfirewhip.jpg", String.valueOf(Expansions.BASIC.getValue())},
+    private static SpellCard[] basicSpellCardList = {
+            new SpellCard("Amplify Vision", CardType.SPELL, "spell_amplifyvision", PriceRange.FOUR, Expansion.BASIC),
+            new SpellCard("Arcane Nexus", CardType.SPELL, "spell_arcanenexus", PriceRange.SEVEN, Expansion.BASIC),
+            new SpellCard("Consuming Void", CardType.SPELL, "spell_consumingvoid", PriceRange.SEVEN, Expansion.BASIC),
+            new SpellCard("Dark Fire", CardType.SPELL, "spell_darkfire", PriceRange.FIVE, Expansion.BASIC),
+            new SpellCard("Essence Theft", CardType.SPELL, "spell_essencetheft", PriceRange.FIVE, Expansion.BASIC),
+            new SpellCard("Feral Lightning", CardType.SPELL, "spell_ferallightning", PriceRange.FIVE, Expansion.BASIC),
+            new SpellCard("Chaos Arc", CardType.SPELL, "spell_chaosarc", PriceRange.SIX, Expansion.BASIC),
+            new SpellCard("Ignite", CardType.SPELL, "spell_ignite", PriceRange.FOUR, Expansion.BASIC),
+            new SpellCard("Lavatendril", CardType.SPELL, "spell_lavatendril", PriceRange.FOUR, Expansion.BASIC),
+            new SpellCard("Oblivion Swell", CardType.SPELL, "spell_oblivionswell", PriceRange.FIVE, Expansion.BASIC),
+            new SpellCard("Phoenix Flame", CardType.SPELL, "spell_phoenixflame", PriceRange.THREE, Expansion.BASIC),
+            new SpellCard("Planar Insight", CardType.SPELL, "spell_planarinsight", PriceRange.SIX, Expansion.BASIC),
+            new SpellCard("Spectral Echo", CardType.SPELL, "spell_spectralecho", PriceRange.THREE, Expansion.BASIC),
+            new SpellCard("Wildfire Whip", CardType.SPELL, "spell_wildfirewhip", PriceRange.SIX, Expansion.BASIC)
     };
 
-    public static String[][] getBasicCharacterCardList() {
+    public static CharacterCard[] getBasicCharacterCardList() {
         return basicCharacterCardList;
     }
 
-    public static void setBasicCharacterCardList(String[][] basicCharacterCardList) {
+    public static void setBasicCharacterCardList(CharacterCard[] basicCharacterCardList) {
         CardList.basicCharacterCardList = basicCharacterCardList;
     }
 
-    public static String[][] getBasicNemesisCardList() {
+    public static NemesisCard[] getBasicNemesisCardList() {
         return basicNemesisCardList;
     }
 
-    public static void setBasicNemesisCardList(String[][] basicNemesisCardList) {
+    public static void setBasicNemesisCardList(NemesisCard[] basicNemesisCardList) {
         CardList.basicNemesisCardList = basicNemesisCardList;
     }
 
-    public static String[][] getBasicGemCardList() {
+    public static GemCard[] getBasicGemCardList() {
         return basicGemCardList;
     }
 
-    public static void setBasicGemCardList(String[][] basicGemCardList) {
+    public static void setBasicGemCardList(GemCard[] basicGemCardList) {
         CardList.basicGemCardList = basicGemCardList;
     }
 
-    public static String[][] getBasicRelicCardList() {
+    public static RelicCard[] getBasicRelicCardList() {
         return basicRelicCardList;
     }
 
-    public static void setBasicRelicCardList(String[][] basicRelicCardList) {
+    public static void setBasicRelicCardList(RelicCard[] basicRelicCardList) {
         CardList.basicRelicCardList = basicRelicCardList;
     }
 
-    public static String[][] getBasicSpellCardList() {
+    public static SpellCard[] getBasicSpellCardList() {
         return basicSpellCardList;
     }
 
-    public static void setBasicSpellCardList(String[][] basicSpellCardList) {
+    public static void setBasicSpellCardList(SpellCard[] basicSpellCardList) {
         CardList.basicSpellCardList = basicSpellCardList;
     }
 }

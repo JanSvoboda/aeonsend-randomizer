@@ -4,12 +4,12 @@ package com.example.honza.aeonsend.enums;
  * Created by honza on 7.9.17.
  */
 
-public enum Expansions {
+public enum Expansion {
     BASIC(0), DEPTHS(1), NAMELESS(2);
 
     private int value;
 
-    Expansions(int i) {
+    Expansion(int i) {
         this.value = value;
     }
 

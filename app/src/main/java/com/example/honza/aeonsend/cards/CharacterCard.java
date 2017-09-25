@@ -1,6 +1,8 @@
 package com.example.honza.aeonsend.cards;
 
 import com.example.honza.aeonsend.enums.CardType;
+import com.example.honza.aeonsend.enums.Expansion;
+import com.example.honza.aeonsend.enums.PriceRange;
 
 /**
  * Created by honza on 3.9.17.
@@ -8,15 +10,13 @@ import com.example.honza.aeonsend.enums.CardType;
 
 public class CharacterCard extends Card {
 
-    public CharacterCard(int id, String name, CardType type, String picture) {
-        super(id, name, type, picture);
-        setType(CardType.CHARACTER);
-        setPrice(0);
+    public CharacterCard(int id, String name, CardType type, String picture, Expansion expansion) {
+        super(id, name, type, picture, expansion);
+        setPrice(PriceRange.NULL);
     }
 
-    public CharacterCard(String name, CardType type, String picture) {
-        super(name, type, picture);
-        setType(CardType.CHARACTER);
-        setPrice(0);
+    public CharacterCard(String name, CardType type, String picture, Expansion expansion) {
+        super(name, type, picture, expansion);
+        setPrice(PriceRange.NULL);
     }
 }
