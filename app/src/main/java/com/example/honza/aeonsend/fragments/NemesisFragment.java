@@ -16,6 +16,7 @@ import com.example.honza.aeonsend.cards.NemesisCard;
 import com.example.honza.aeonsend.database.CardList;
 import com.example.honza.aeonsend.database.DatabaseHandler;
 import com.example.honza.aeonsend.enums.CardType;
+import com.example.honza.aeonsend.enums.Expansion;
 import com.example.honza.aeonsend.utils.Constants;
 
 import java.util.List;
@@ -31,12 +32,15 @@ public class NemesisFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
 
+        // TODO fake value - expansion will be taken from user's choice, but Expansion.BASIC is always included
+        Expansion[] expansions = {Expansion.BASIC, Expansion.DEPTHS, Expansion.NAMELESS};
+
         // Get access to SQLite DB
         DatabaseHandler dh = DatabaseHandler.getInstance(getContext());
         SQLiteDatabase db = dh.getReadableDatabase();
 
         // Get all nemesis cards from DB
-        List<Card> cards = dh.getAll(db, CardType.NEMESIS);
+        List<Card> cards = dh.getAll(db, CardType.NEMESIS, expansions);
 
         // Get random nemesis for play
         Random random = new Random();

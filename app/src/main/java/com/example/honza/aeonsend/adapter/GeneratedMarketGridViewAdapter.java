@@ -12,6 +12,8 @@ import com.example.honza.aeonsend.R;
 import com.example.honza.aeonsend.cards.Card;
 import com.example.honza.aeonsend.utils.Constants;
 
+import java.util.List;
+
 /**
  * Created by honza on 25.9.17.
  */
@@ -19,16 +21,16 @@ import com.example.honza.aeonsend.utils.Constants;
 public class GeneratedMarketGridViewAdapter extends BaseAdapter {
 
     private Context mContext;
-    private Card[] cards;
+    private List<Card> cards;
 
-    public GeneratedMarketGridViewAdapter(Context mContext, Card[] cards) {
+    public GeneratedMarketGridViewAdapter(Context mContext, List<Card> cards) {
         this.mContext = mContext;
         this.cards = cards;
     }
 
     @Override
     public int getCount() {
-        return cards.length;
+        return cards.size();
     }
 
     @Override
@@ -45,13 +47,13 @@ public class GeneratedMarketGridViewAdapter extends BaseAdapter {
     public View getView(int position, View view, ViewGroup viewGroup) {
 
         // Get view for one character card
-        Card card = cards[position];
+        Card card = cards.get(position);
 
         if (view == null) {
             final LayoutInflater layoutInflater = LayoutInflater.from(mContext);
             view = layoutInflater.inflate(R.layout.fragment_gridview_item, null);
         }
-        // TODO bullshit value
+
         final ImageView imageView = view.findViewById(R.id.fragment_gridview_image);
 //        final TextView textView = view.findViewById(R.id.fragment_gridview_text);
         imageView.setImageResource(view.getResources().getIdentifier(card.getPicture(), Constants.DRAWABLEDEFTYPE, Constants.PACKAGENAME));

@@ -12,11 +12,9 @@ public class CharacterCard extends Card {
 
     public CharacterCard(int id, String name, CardType type, String picture, Expansion expansion) {
         super(id, name, type, picture, expansion);
-        setPrice(PriceRange.NULL);
     }
 
     public CharacterCard(String name, CardType type, String picture, Expansion expansion) {
         super(name, type, picture, expansion);
-        setPrice(PriceRange.NULL);
     }
 }

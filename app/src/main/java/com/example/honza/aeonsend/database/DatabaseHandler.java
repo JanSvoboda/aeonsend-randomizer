@@ -12,6 +12,7 @@ import com.example.honza.aeonsend.cards.CharacterCard;
 import com.example.honza.aeonsend.cards.NemesisCard;
 import com.example.honza.aeonsend.cards.SupplyCard;
 import com.example.honza.aeonsend.enums.CardType;
+import com.example.honza.aeonsend.enums.Expansion;
 import com.example.honza.aeonsend.enums.PriceRange;
 import com.example.honza.aeonsend.enums.TableColumns;
 import com.example.honza.aeonsend.utils.Constants;
@@ -62,35 +63,35 @@ public class DatabaseHandler extends SQLiteOpenHelper implements CardDAO {
                 case "nemesis":
                     // Create Nemesis Table and insert cards
                     sqLiteDatabase.execSQL(CreateNemesisTable());
-                    for (NemesisCard card : CardList.getBasicNemesisCardList()) {
+                    for (NemesisCard card : CardList.getNemesisCardList()) {
                         addCard(sqLiteDatabase, card, tableName);
                     }
                     break;
                 // Create Character Table and insert cards
                 case "character":
                     sqLiteDatabase.execSQL(CreateCharacterTable());
-                    for (CharacterCard card : CardList.getBasicCharacterCardList()) {
+                    for (CharacterCard card : CardList.getCharacterCardList()) {
                         addCard(sqLiteDatabase, card, tableName);
                     }
                     break;
                 // Create Gem Table and insert cards
                 case "gem":
                     sqLiteDatabase.execSQL(CreateMarketTable(tableName));
-                    for (SupplyCard card : CardList.getBasicGemCardList()) {
+                    for (SupplyCard card : CardList.getGemCardList()) {
                         addCard(sqLiteDatabase, card, tableName);
                     }
                     break;
                 // Create Relic Table and insert cards
                 case "relic":
                     sqLiteDatabase.execSQL(CreateMarketTable(tableName));
-                    for (SupplyCard card : CardList.getBasicRelicCardList()) {
+                    for (SupplyCard card : CardList.getRelicCardList()) {
                         addCard(sqLiteDatabase, card, tableName);
                     }
                     break;
                 // Create Spell Table and insert cards
                 case "spell":
                     sqLiteDatabase.execSQL(CreateMarketTable(tableName));
-                    for (SupplyCard card : CardList.getBasicSpellCardList()) {
+                    for (SupplyCard card : CardList.getSpellCardList()) {
                         addCard(sqLiteDatabase, card, tableName);
                     }
                     break;
@@ -167,18 +168,20 @@ public class DatabaseHandler extends SQLiteOpenHelper implements CardDAO {
 
     @Override
     // Return all cards that are applicable for entered type
-    public List<Card> getCardsByType(CardType type) throws Exception {
-        return getCardsByType(type, PriceRange.ANY);
+    public List<Card> getCardsByPrice(SQLiteDatabase db, CardType type, Expansion[] expansions) throws Exception {
+        return null;
+//        return getCardsByPrice(db, type, PriceRange.ANY, );
     }
 
     @Override
-    public List<Card> getCardsByType(CardType type, PriceRange price) throws Exception {
-        SQLiteDatabase db = this.getReadableDatabase();
+    public List<Card> getCardsByPrice(SQLiteDatabase db, CardType type, PriceRange price, Expansion[] expansions) throws Exception {
+//        SQLiteDatabase db = this.getReadableDatabase();
         String tableName = type.getValue();
 
         Cursor cursor = db.rawQuery("SELECT * from " + tableName + " where " +
-                TableColumns.KEY_PRICE.getValue() + ">=" + price.getMinPrice() + " AND " +
-                TableColumns.KEY_PRICE.getValue() + "<=" + price.getMaxPrice(), null);
+                TableColumns.KEY_PRICE.getValue() + " >= " + price.getMinPrice() + " AND " +
+                TableColumns.KEY_PRICE.getValue() + " <= " + price.getMaxPrice() + " AND " +
+                "(" + getSQLExpansionQuery(expansions) + ")", null);
 
         Card card = null;
         List<Card> cardList = new ArrayList<>();
@@ -191,7 +194,7 @@ public class DatabaseHandler extends SQLiteOpenHelper implements CardDAO {
         }
 
         cursor.close();
-        db.close();
+//        db.close();
 
         return cardList;
     }
@@ -202,7 +205,7 @@ public class DatabaseHandler extends SQLiteOpenHelper implements CardDAO {
 
         values.put(TableColumns.KEY_NAME.getValue(), card.getName());
         values.put(TableColumns.KEY_TYPE.getValue(), card.getType().getValue());
-        values.put(TableColumns.KEY_PRICE.getValue(), card.getPrice().toString());
+//        values.put(TableColumns.KEY_PRICE.getValue(), card.getPrice().toString());
         values.put(TableColumns.KEY_PICTURE.getValue(), card.getId());
 
 
@@ -256,11 +259,11 @@ public class DatabaseHandler extends SQLiteOpenHelper implements CardDAO {
     }
 
     @Override
-    public List<Card> getAll(SQLiteDatabase db, CardType type) {
+    public List<Card> getAll(SQLiteDatabase db, CardType type, Expansion[] expansions) {
 
         String tableName = type.getValue();
-
-        Cursor cursor = db.rawQuery("SELECT * from " + tableName, null);
+        String expansionQuery = getSQLExpansionQuery(expansions);
+        Cursor cursor = db.rawQuery("SELECT * from " + tableName + " where " + expansionQuery, null);
 
         Card card = null;
         List<Card> cardList = new ArrayList<>();
@@ -278,6 +281,20 @@ public class DatabaseHandler extends SQLiteOpenHelper implements CardDAO {
 
         cursor.close();
         return cardList;
+    }
+
+    private String getSQLExpansionQuery(Expansion[] expansions) {
+        StringBuilder sb = new StringBuilder();
+
+        for (int i = 0; i < expansions.length; i++) {
+            sb.append(TableColumns.KEY_EXPANSION.getValue() + "='" + expansions[i].name() + "'");
+            if (i != (expansions.length - 1)) {
+                sb.append(" OR ");
+            } else {
+                break;
+            }
+        }
+        return sb.toString();
     }
 
     private String CreateNemesisTable() {

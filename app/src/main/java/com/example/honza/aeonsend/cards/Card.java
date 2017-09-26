@@ -15,7 +15,6 @@ public class Card {
     private int id;
     private String name;
     private CardType type;
-    protected PriceRange price;
     private String picture;
     private Expansion expansion;
 
@@ -56,14 +55,6 @@ public class Card {
 
     public void setType(CardType type) {
         this.type = type;
-    }
-
-    public PriceRange getPrice() {
-        return price;
-    }
-
-    public void setPrice(PriceRange price) {
-        this.price = price;
     }
 
     public String getPicture() {
@@ -114,5 +105,36 @@ public class Card {
             default:
                 throw new Exception("Unknown type of card. Type in DB is: " + type.getValue());
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Card card = (Card) o;
+
+        if (name != null ? !name.equals(card.name) : card.name != null) return false;
+        if (type != card.type) return false;
+        if (picture != null ? !picture.equals(card.picture) : card.picture != null) return false;
+        return expansion == card.expansion;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = name != null ? name.hashCode() : 0;
+        result = 31 * result + (type != null ? type.hashCode() : 0);
+        result = 31 * result + (picture != null ? picture.hashCode() : 0);
+        result = 31 * result + (expansion != null ? expansion.hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Card{" +
+                "name='" + name + '\'' +
+                ", type=" + type +
+                '}';
     }
 }

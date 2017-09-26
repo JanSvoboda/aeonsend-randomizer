@@ -11,6 +11,7 @@ import com.example.honza.aeonsend.cards.RelicCard;
 import com.example.honza.aeonsend.cards.SpellCard;
 import com.example.honza.aeonsend.cards.SupplyCard;
 import com.example.honza.aeonsend.enums.CardType;
+import com.example.honza.aeonsend.enums.Expansion;
 import com.example.honza.aeonsend.enums.PriceRange;
 
 import java.util.List;
@@ -42,9 +43,9 @@ public interface CardDAO {
 
     boolean deleteAll();
 
-    List<Card> getAll(SQLiteDatabase db, CardType type);
+    List<Card> getAll(SQLiteDatabase db, CardType type, Expansion[] expansions);
 
-    List<Card> getCardsByType(CardType type) throws Exception;
+    List<Card> getCardsByPrice(SQLiteDatabase db, CardType type, Expansion[] expansions) throws Exception;
 
-    List<Card> getCardsByType(CardType type, PriceRange price) throws Exception;
+    List<Card> getCardsByPrice(SQLiteDatabase db, CardType type, PriceRange price, Expansion[] expansions) throws Exception;
 }

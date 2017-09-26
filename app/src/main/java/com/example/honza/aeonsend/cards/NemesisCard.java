@@ -15,14 +15,12 @@ public class NemesisCard extends Card {
     public NemesisCard(int id, String name, CardType type, String picture, Expansion expansion, String setupDescription) {
         super(id, name, type, picture, expansion);
         setType(CardType.NEMESIS);
-        setPrice(PriceRange.NULL);
         setSetupDescription(setupDescription);
     }
 
     public NemesisCard(String name, CardType type, String picture, Expansion expansion, String setupDescription) {
         super(name, type, picture, expansion);
         setType(CardType.NEMESIS);
-        setPrice(PriceRange.NULL);
         setSetupDescription(setupDescription);
     }
 
