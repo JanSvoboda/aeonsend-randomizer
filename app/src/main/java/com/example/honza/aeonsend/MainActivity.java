@@ -2,6 +2,7 @@ package com.example.honza.aeonsend;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -17,7 +18,10 @@ import android.widget.ListView;
 
 import com.example.honza.aeonsend.adapter.MarketGridViewAdapter;
 import com.example.honza.aeonsend.adapter.MarketListViewAdapter;
+import com.example.honza.aeonsend.cards.Card;
+import com.example.honza.aeonsend.database.DatabaseHandler;
 import com.example.honza.aeonsend.database.MarketCardList;
+import com.example.honza.aeonsend.enums.CardType;
 
 public class MainActivity extends AppCompatActivity  {
 
@@ -76,6 +80,11 @@ public class MainActivity extends AppCompatActivity  {
             }
         });
 
+        DatabaseHandler databaseHandler = DatabaseHandler.getInstance(this);
+        SQLiteDatabase db = databaseHandler.getWritableDatabase();
+        Card card = databaseHandler.getCard(db, 1, CardType.SPELL);
+        databaseHandler.close();
+//        databaseHandler.addCard(new CharacterCard(1,"blabla", CardType.CHARACTER, "blabla", Expansion.BASIC), CardType.CHARACTER.getValue());
 
 
     }

@@ -54,4 +54,16 @@ public enum PriceRange {
     public String toString() {
         return name;
     }
+
+    private static final PriceRange[] copyOfValues = values();
+
+    public static PriceRange fromString(String name) {
+        for (PriceRange priceRange : copyOfValues) {
+            if (priceRange.name.equalsIgnoreCase(name)) {
+                return priceRange;
+            }
+        }
+        return null;
+    }
+
 }

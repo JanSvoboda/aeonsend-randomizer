@@ -5,15 +5,16 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import com.example.honza.aeonsend.cards.Card;
-import com.example.honza.aeonsend.enums.CardType;
 import com.example.honza.aeonsend.cards.CharacterCard;
-import com.example.honza.aeonsend.cards.GemCard;
 import com.example.honza.aeonsend.cards.NemesisCard;
-import com.example.honza.aeonsend.cards.RelicCard;
-import com.example.honza.aeonsend.cards.SpellCard;
+import com.example.honza.aeonsend.cards.SupplyCard;
+import com.example.honza.aeonsend.enums.CardType;
+import com.example.honza.aeonsend.enums.PriceRange;
 import com.example.honza.aeonsend.enums.TableColumns;
+import com.example.honza.aeonsend.utils.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,96 +31,156 @@ public class DatabaseHandler extends SQLiteOpenHelper implements CardDAO {
 
     // Database Name
     private static final String DATABASE_NAME = "aeonsend";
+    private static DatabaseHandler mDatabaseInstance = null;
+    private Context mContext;
 
-    // Contacts table name
-    private static String tableName = "cards";
+    public static DatabaseHandler getInstance(Context context) {
+        if (mDatabaseInstance == null) {
+            mDatabaseInstance = new DatabaseHandler(context.getApplicationContext());
+        }
+        return mDatabaseInstance;
+    }
 
-    public DatabaseHandler(Context context) {
+//    public DatabaseHandler(Context context) {
+//        super(context, DATABASE_NAME, null, DATABASE_VERSION);
+//    }
+
+    private DatabaseHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        mContext = context;
     }
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
+
+        Log.d("AEDB", "onCreate: Creating DB");
+
         // Create empty DB
-        sqLiteDatabase.execSQL(CreateSQLString());
 
-        //Enter characters into DB
-        for (Card card : CardList.getBasicCharacterCardList()) {
-            addCard(card);
-        }
-
-        //Enter nemesis into DB
-        for (Card card : CardList.getBasicNemesisCardList()) {
-            addCard(card);
-        }
-
-        //Enter gems into DB
-        for (Card card : CardList.getBasicGemCardList()) {
-            addCard(card);
-        }
-
-        //Enter relic into DB
-        for (Card card : CardList.getBasicRelicCardList()) {
-            addCard(card);
-        }
-
-        //Enter spells into DB
-        for (Card card : CardList.getBasicSpellCardList()) {
-            addCard(card);
+        for (String tableName : Constants.tables) {
+            switch (tableName) {
+                case "nemesis":
+                    // Create Nemesis Table and insert cards
+                    sqLiteDatabase.execSQL(CreateNemesisTable());
+                    for (NemesisCard card : CardList.getBasicNemesisCardList()) {
+                        addCard(sqLiteDatabase, card, tableName);
+                    }
+                    break;
+                // Create Character Table and insert cards
+                case "character":
+                    sqLiteDatabase.execSQL(CreateCharacterTable());
+                    for (CharacterCard card : CardList.getBasicCharacterCardList()) {
+                        addCard(sqLiteDatabase, card, tableName);
+                    }
+                    break;
+                // Create Gem Table and insert cards
+                case "gem":
+                    sqLiteDatabase.execSQL(CreateMarketTable(tableName));
+                    for (SupplyCard card : CardList.getBasicGemCardList()) {
+                        addCard(sqLiteDatabase, card, tableName);
+                    }
+                    break;
+                // Create Relic Table and insert cards
+                case "relic":
+                    sqLiteDatabase.execSQL(CreateMarketTable(tableName));
+                    for (SupplyCard card : CardList.getBasicRelicCardList()) {
+                        addCard(sqLiteDatabase, card, tableName);
+                    }
+                    break;
+                // Create Spell Table and insert cards
+                case "spell":
+                    sqLiteDatabase.execSQL(CreateMarketTable(tableName));
+                    for (SupplyCard card : CardList.getBasicSpellCardList()) {
+                        addCard(sqLiteDatabase, card, tableName);
+                    }
+                    break;
+            }
         }
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + tableName);
+        for (String table : Constants.tables) {
+            sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + table);
+        }
         onCreate(sqLiteDatabase);
     }
 
     @Override
-    public boolean addCard(Card card) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
+    public boolean addCard(SQLiteDatabase db, Card card, String tableName, ContentValues values) {
+//        SQLiteDatabase db = this.getWritableDatabase();
 
         values.put(TableColumns.KEY_NAME.getValue(), card.getName());
         values.put(TableColumns.KEY_TYPE.getValue(), card.getType().getValue());
-        values.put(TableColumns.KEY_PRICE.getValue(), card.getPrice().toString());
-        values.put(TableColumns.KEY_PICTURE.getValue(), card.getId());
+        values.put(TableColumns.KEY_PICTURE.getValue(), card.getPicture());
+        values.put(TableColumns.KEY_EXPANSION.getValue(), card.getExpansion().name());
 
         db.insert(tableName, null, values);
-        db.close();
+//        db.close();
 
         return true;
     }
 
     @Override
-    public Card getCard(int id) {
-        return null;
+    public boolean addCard(SQLiteDatabase db, CharacterCard card, String tableName) {
+        ContentValues values = new ContentValues();
+        return addCard(db, card, tableName, values);
+    }
+
+    @Override
+    public boolean addCard(SQLiteDatabase db, NemesisCard card, String tableName) {
+        ContentValues values = new ContentValues();
+        values.put(TableColumns.KEY_SETUPDESCRIPTION.getValue(), card.getSetupDescription());
+        boolean result = addCard(db, card, tableName, values);
+        return result;
+    }
+
+    @Override
+    public boolean addCard(SQLiteDatabase db, SupplyCard card, String tableName) {
+        ContentValues values = new ContentValues();
+        values.put(TableColumns.KEY_PRICE.getValue(), card.getPrice().toString());
+        boolean result = addCard(db, card, tableName, values);
+        return result;
+    }
+
+    @Override
+    public Card getCard(SQLiteDatabase db, int id, CardType type) {
+//        SQLiteDatabase db = this.getReadableDatabase();
+
+        String tableName = type.getValue();
+        Cursor cursor = db.rawQuery("SELECT * from " + tableName + " where " +
+                TableColumns.KEY_ID.getValue() + "=" + id, null);
+
+        Card card = null;
+
+        if (cursor.moveToFirst()) {
+            try {
+                card = Card.getCardFromCursor(cursor);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        cursor.close();
+        return card;
     }
 
     @Override
     // Return all cards that are applicable for entered type
     public List<Card> getCardsByType(CardType type) throws Exception {
-        return getCardsByType(type, 0, 7);
+        return getCardsByType(type, PriceRange.ANY);
     }
 
     @Override
-    public List<Card> getCardsByType(CardType type, int price) throws Exception {
-        int minprice = --price;
-        int maxprice = ++price;
-
-        return getCardsByType(type, minprice, maxprice);
-    }
-
-    @Override
-    public List<Card> getCardsByType(CardType type, int minPrice, int maxPrice) throws Exception {
+    public List<Card> getCardsByType(CardType type, PriceRange price) throws Exception {
         SQLiteDatabase db = this.getReadableDatabase();
+        String tableName = type.getValue();
 
         Cursor cursor = db.rawQuery("SELECT * from " + tableName + " where " +
-                TableColumns.KEY_TYPE.getValue() + "=" + type.getValue() + " AND " +
-                TableColumns.KEY_PRICE.getValue() + ">=" + minPrice + " AND " +
-                TableColumns.KEY_PRICE.getValue() + "<=" + maxPrice, null);
+                TableColumns.KEY_PRICE.getValue() + ">=" + price.getMinPrice() + " AND " +
+                TableColumns.KEY_PRICE.getValue() + "<=" + price.getMaxPrice(), null);
 
-        Card card;
+        Card card = null;
         List<Card> cardList = new ArrayList<>();
 
         if (cursor.moveToFirst()) {
@@ -136,54 +197,118 @@ public class DatabaseHandler extends SQLiteOpenHelper implements CardDAO {
     }
 
     @Override
-    public int updateCard(Card card) {
+    public int updateCard(Card card, String tableName, ContentValues values) {
         SQLiteDatabase db = this.getWritableDatabase();
-
-        ContentValues values = new ContentValues();
 
         values.put(TableColumns.KEY_NAME.getValue(), card.getName());
         values.put(TableColumns.KEY_TYPE.getValue(), card.getType().getValue());
         values.put(TableColumns.KEY_PRICE.getValue(), card.getPrice().toString());
         values.put(TableColumns.KEY_PICTURE.getValue(), card.getId());
 
+
         try {
             return db.update(tableName, values, TableColumns.KEY_ID.getValue() + " = ?",
-                new String[] { String.valueOf(card.getId()) });
+                    new String[]{String.valueOf(card.getId())});
         } finally {
             db.close();
         }
     }
 
     @Override
-    public int deleteCard(int id) {
+    public int updateCard(NemesisCard card) {
+        ContentValues values = new ContentValues();
+        values.put(TableColumns.KEY_SETUPDESCRIPTION.getValue(), card.getSetupDescription());
+        return updateCard(card, card.getType().getValue(), values);
+    }
+
+    @Override
+    public int updateCard(CharacterCard card) {
+        ContentValues values = new ContentValues();
+        return updateCard(card, card.getType().getValue(), values);
+    }
+
+    @Override
+    public int updateCard(SupplyCard card) {
+        ContentValues values = new ContentValues();
+        values.put(TableColumns.KEY_PRICE.getValue(), card.getPrice().toString());
+        return updateCard(card, card.getType().getValue(), values);
+    }
+
+    @Override
+    public int deleteCard(int id, String tableName) {
         SQLiteDatabase db = this.getWritableDatabase();
 
-        int result = db.delete(tableName, TableColumns.KEY_ID.getValue() + " = ?", new String[] {String.valueOf(id)});
+        int result = db.delete(tableName, TableColumns.KEY_ID.getValue() + " = ?", new String[]{String.valueOf(id)});
         db.close();
         return result;
     }
 
     @Override
-    public int deleteAll() {
+    public boolean deleteAll() {
         SQLiteDatabase db = this.getWritableDatabase();
 
-        int result = db.delete(tableName, null, null);
+        for (String tableName : Constants.tables) {
+            db.delete(tableName, null, null);
+        }
         db.close();
 
-        return result;
+        return true;
     }
 
     @Override
-    public List<Card> getAll() {
-        return null;
+    public List<Card> getAll(SQLiteDatabase db, CardType type) {
+
+        String tableName = type.getValue();
+
+        Cursor cursor = db.rawQuery("SELECT * from " + tableName, null);
+
+        Card card = null;
+        List<Card> cardList = new ArrayList<>();
+
+        if (cursor.moveToFirst()) {
+            do {
+                try {
+                    card = Card.getCardFromCursor(cursor);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                cardList.add(card);
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        return cardList;
     }
 
-    private String CreateSQLString() {
-        String CREATE_TABLE = "CREATE TABLE " + tableName + "("
-                + TableColumns.KEY_ID.getValue() + " INTEGER PRIMARY KEY," +
-                TableColumns.KEY_NAME.getValue() + " TEXT," + TableColumns.KEY_TYPE.getValue() +
-                " TEXT," + TableColumns.KEY_PRICE.getValue() + " INTEGER," +
-                TableColumns.KEY_PICTURE.getValue() + " TEXT" + ")";
+    private String CreateNemesisTable() {
+        String CREATE_TABLE = "CREATE TABLE " + Constants.NEMESISTABLE + "(" +
+                TableColumns.KEY_ID.getValue() + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                TableColumns.KEY_NAME.getValue() + " TEXT," +
+                TableColumns.KEY_TYPE.getValue() + " TEXT," +
+                TableColumns.KEY_PICTURE.getValue() + " TEXT," +
+                TableColumns.KEY_EXPANSION.getValue() + " TEXT," +
+                TableColumns.KEY_SETUPDESCRIPTION.getValue() + " TEXT" + ")";
+        return CREATE_TABLE;
+    }
+
+    private String CreateCharacterTable() {
+        String CREATE_TABLE = "CREATE TABLE " + Constants.CHARACTERTABLE + "(" +
+                TableColumns.KEY_ID.getValue() + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                TableColumns.KEY_NAME.getValue() + " TEXT," +
+                TableColumns.KEY_TYPE.getValue() + " TEXT," +
+                TableColumns.KEY_PICTURE.getValue() + " TEXT," +
+                TableColumns.KEY_EXPANSION.getValue() + " TEXT" + ")";
+        return CREATE_TABLE;
+    }
+
+    private String CreateMarketTable(String tableName) {
+        String CREATE_TABLE = "CREATE TABLE " + tableName + "(" +
+                TableColumns.KEY_ID.getValue() + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                TableColumns.KEY_NAME.getValue() + " TEXT," +
+                TableColumns.KEY_TYPE.getValue() + " TEXT," +
+                TableColumns.KEY_PICTURE.getValue() + " TEXT," +
+                TableColumns.KEY_PRICE.getValue() + " INTEGER, " +
+                TableColumns.KEY_EXPANSION.getValue() + " TEXT" + ")";
         return CREATE_TABLE;
     }
 }

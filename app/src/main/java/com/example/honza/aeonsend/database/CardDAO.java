@@ -1,7 +1,17 @@
 package com.example.honza.aeonsend.database;
 
+import android.content.ContentValues;
+import android.database.sqlite.SQLiteDatabase;
+
 import com.example.honza.aeonsend.cards.Card;
+import com.example.honza.aeonsend.cards.CharacterCard;
+import com.example.honza.aeonsend.cards.GemCard;
+import com.example.honza.aeonsend.cards.NemesisCard;
+import com.example.honza.aeonsend.cards.RelicCard;
+import com.example.honza.aeonsend.cards.SpellCard;
+import com.example.honza.aeonsend.cards.SupplyCard;
 import com.example.honza.aeonsend.enums.CardType;
+import com.example.honza.aeonsend.enums.PriceRange;
 
 import java.util.List;
 
@@ -10,22 +20,31 @@ import java.util.List;
  */
 
 public interface CardDAO {
-    boolean addCard(Card card);
+    boolean addCard(SQLiteDatabase db, Card card, String tableName, ContentValues values);
 
-    Card getCard(int id);
+    boolean addCard(SQLiteDatabase db, CharacterCard card, String tableName);
 
-    int updateCard(Card card);
+    boolean addCard(SQLiteDatabase db, NemesisCard card, String tableName);
 
-    int deleteCard(int id);
+    boolean addCard(SQLiteDatabase db, SupplyCard card, String tableName);
 
-    int deleteAll();
+    Card getCard(SQLiteDatabase db, int id, CardType type);
 
-    List<Card> getAll();
+    int updateCard(Card card, String tableName, ContentValues values);
+
+    int updateCard(NemesisCard card);
+
+    int updateCard(CharacterCard card);
+
+    int updateCard(SupplyCard card);
+
+    int deleteCard(int id, String tableName);
+
+    boolean deleteAll();
+
+    List<Card> getAll(SQLiteDatabase db, CardType type);
 
     List<Card> getCardsByType(CardType type) throws Exception;
 
-    List<Card> getCardsByType(CardType type, int price) throws Exception;
-
-    List<Card> getCardsByType(CardType type, int minprice, int maxprice) throws Exception;
-
+    List<Card> getCardsByType(CardType type, PriceRange price) throws Exception;
 }

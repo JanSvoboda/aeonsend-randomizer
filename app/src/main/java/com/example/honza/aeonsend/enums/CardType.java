@@ -21,4 +21,15 @@ public enum CardType {
     public String getValue() {
         return this.value;
     }
+
+    private static final CardType[] copyOfValues = values();
+
+    public static CardType fromString(String value) {
+        for (CardType type : copyOfValues) {
+            if (type.value.equalsIgnoreCase(value)) {
+                return type;
+            }
+        }
+        return null;
+    }
 }

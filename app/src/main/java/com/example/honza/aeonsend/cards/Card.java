@@ -82,29 +82,33 @@ public class Card {
         this.expansion = expansion;
     }
 
+    // Map obtained cursor data to Card object and return correct object based on the value of type
     public static Card getCardFromCursor(Cursor cursor) throws Exception {
         int id = cursor.getInt(cursor.getColumnIndex(TableColumns.KEY_ID.getValue()));
         String name = cursor.getString(cursor.getColumnIndex(TableColumns.KEY_NAME.getValue()));
-        CardType type = CardType.valueOf(cursor.getString(cursor.getColumnIndex(TableColumns.KEY_TYPE.getValue())));
-        PriceRange price = PriceRange.valueOf(cursor.getString(cursor.getColumnIndex(TableColumns.KEY_PRICE.getValue())));
+        CardType type = CardType.fromString(cursor.getString(cursor.getColumnIndex(TableColumns.KEY_TYPE.getValue())));
         String picture = cursor.getString(cursor.getColumnIndex(TableColumns.KEY_PICTURE.getValue()));
         Expansion expansion = Expansion.valueOf(cursor.getString(cursor.getColumnIndex(TableColumns.KEY_EXPANSION.getValue())));
-        String setupDescription = cursor.getString(cursor.getColumnIndex(TableColumns.KEY_SETUPDESCRIPTION.getValue()));
+        PriceRange price = null;
 
         switch (type) {
             case CHARACTER:
                 return new CharacterCard(id, name, type, picture, expansion);
 
             case NEMESIS:
+                String setupDescription = cursor.getString(cursor.getColumnIndex(TableColumns.KEY_SETUPDESCRIPTION.getValue()));
                 return new NemesisCard(id, name, type, picture, expansion, setupDescription);
 
             case GEM:
+                price = PriceRange.fromString(cursor.getString(cursor.getColumnIndex(TableColumns.KEY_PRICE.getValue())));
                 return new GemCard(id, name, type, picture, price, expansion);
 
             case RELIC:
+                price = PriceRange.fromString(cursor.getString(cursor.getColumnIndex(TableColumns.KEY_PRICE.getValue())));
                 return new RelicCard(id, name, type, picture, price, expansion);
 
             case SPELL:
+                price = PriceRange.fromString(cursor.getString(cursor.getColumnIndex(TableColumns.KEY_PRICE.getValue())));
                 return new SpellCard(id, name, type, picture, price, expansion);
 
             default:
