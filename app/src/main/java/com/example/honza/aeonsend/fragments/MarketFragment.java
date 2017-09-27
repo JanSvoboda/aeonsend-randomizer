@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
+import android.widget.ImageView;
 
 import com.example.honza.aeonsend.R;
 import com.example.honza.aeonsend.adapter.GeneratedMarketGridViewAdapter;
@@ -20,6 +21,7 @@ import com.example.honza.aeonsend.database.MarketSetupCardList;
 import com.example.honza.aeonsend.enums.CardType;
 import com.example.honza.aeonsend.enums.Expansion;
 import com.example.honza.aeonsend.enums.PriceRange;
+import com.example.honza.aeonsend.utils.Constants;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -61,6 +63,14 @@ public class MarketFragment extends Fragment {
                     @Override
                     public void run() {
                         getChosenCards();
+                        /* Alternative way of refreshing GridView. All ItemViews in GridView Adapter are stored in List. Adapter getItem(i) returns Imageview
+                        from the list at position i.
+
+                        for (int i = 0; i < chosenCards.size(); i ++) {
+                            ImageView imageView = (ImageView) gridView.getItemAtPosition(i);
+                            imageView.setImageResource(getResources().getIdentifier(chosenCards.get(i).getPicture(), Constants.DRAWABLEDEFTYPE, Constants.PACKAGENAME));
+                        }
+                        */
                         generatedMarketGridViewAdapter = new GeneratedMarketGridViewAdapter(view.getContext(), chosenCards);
                         gridView.invalidateViews();
                         gridView.setAdapter(generatedMarketGridViewAdapter);

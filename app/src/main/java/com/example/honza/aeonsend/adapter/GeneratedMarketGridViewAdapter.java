@@ -12,6 +12,7 @@ import com.example.honza.aeonsend.R;
 import com.example.honza.aeonsend.cards.Card;
 import com.example.honza.aeonsend.utils.Constants;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,6 +24,9 @@ public class GeneratedMarketGridViewAdapter extends BaseAdapter {
     private Context mContext;
     private List<Card> cards;
 
+    // Important for ImageView refresh per View - alternative way of GridView refresh. Stores all ImageViews
+    final private List<ImageView> imageViewList = new ArrayList<>();
+
     public GeneratedMarketGridViewAdapter(Context mContext, List<Card> cards) {
         this.mContext = mContext;
         this.cards = cards;
@@ -33,9 +37,11 @@ public class GeneratedMarketGridViewAdapter extends BaseAdapter {
         return cards.size();
     }
 
+
+    // Return Item from List of ImageViews
     @Override
     public Object getItem(int i) {
-        return null;
+        return imageViewList.get(i);
     }
 
     @Override
@@ -58,6 +64,10 @@ public class GeneratedMarketGridViewAdapter extends BaseAdapter {
 //        final TextView textView = view.findViewById(R.id.fragment_gridview_text);
         imageView.setImageResource(view.getResources().getIdentifier(card.getPicture(), Constants.DRAWABLEDEFTYPE, Constants.PACKAGENAME));
 //        textView.setText(card.getName());
+
+        // Store ImageView into List that is used for fetching an ImageView at position i
+        imageViewList.add(imageView);
+
 
         return view;
     }
