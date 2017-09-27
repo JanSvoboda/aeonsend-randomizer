@@ -11,8 +11,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.honza.aeonsend.R;
-import com.example.honza.aeonsend.cards.MarketCard;
-import com.example.honza.aeonsend.database.MarketCardList;
+import com.example.honza.aeonsend.cards.MarketSetupCard;
+import com.example.honza.aeonsend.database.MarketSetupCardList;
 
 /**
  * Created by honza on 14.9.17.
@@ -21,16 +21,16 @@ import com.example.honza.aeonsend.database.MarketCardList;
 public class MarketListViewAdapter extends BaseAdapter {
 
     private final Context mContext;
-    private final MarketCard[] marketCards;
+    private final MarketSetupCard[] marketSetupCards;
 
-    public MarketListViewAdapter(Context mContext, MarketCard[] marketCards) {
+    public MarketListViewAdapter(Context mContext, MarketSetupCard[] marketSetupCards) {
         this.mContext = mContext;
-        this.marketCards = marketCards;
+        this.marketSetupCards = marketSetupCards;
     }
 
     @Override
     public int getCount() {
-        return MarketCardList.getMarketCards().length;
+        return MarketSetupCardList.getMarketSetupCards().length;
     }
 
     @Override
@@ -47,7 +47,7 @@ public class MarketListViewAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        final MarketCard marketCard = marketCards[position];
+        final MarketSetupCard marketSetupCard = marketSetupCards[position];
 
         if (convertView == null) {
             final LayoutInflater layoutInflater = LayoutInflater.from(mContext);
@@ -61,14 +61,14 @@ public class MarketListViewAdapter extends BaseAdapter {
         final TextView textSpellDistribution = convertView.findViewById(R.id.textSpellCardDistribution);
 
 
-        imageView.setImageResource(marketCard.getImage());
+        imageView.setImageResource(marketSetupCard.getImage());
         imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
-        textMarketSetupName.setText(marketCard.getName());
+        textMarketSetupName.setText(marketSetupCard.getName());
         textMarketSetupName.setAllCaps(true);
         textMarketSetupName.setTypeface(null, Typeface.BOLD);
-        textGemDistribution.setText("Gems: " + MarketCard.toStringPriceRange(MarketCard.mapPriceRangeFromArray(marketCard.getGemsPriceList())));
-        textRelicDistribution.setText("Relics: " + MarketCard.toStringPriceRange(MarketCard.mapPriceRangeFromArray(marketCard.getRelicsPriceList())));
-        textSpellDistribution.setText("Spells: " + MarketCard.toStringPriceRange(MarketCard.mapPriceRangeFromArray(marketCard.getSpellsPriceList())));
+        textGemDistribution.setText("Gems: " + MarketSetupCard.toStringPriceRange(MarketSetupCard.mapPriceRangeFromArray(marketSetupCard.getGemsPriceList())));
+        textRelicDistribution.setText("Relics: " + MarketSetupCard.toStringPriceRange(MarketSetupCard.mapPriceRangeFromArray(marketSetupCard.getRelicsPriceList())));
+        textSpellDistribution.setText("Spells: " + MarketSetupCard.toStringPriceRange(MarketSetupCard.mapPriceRangeFromArray(marketSetupCard.getSpellsPriceList())));
 
         return convertView;
     }

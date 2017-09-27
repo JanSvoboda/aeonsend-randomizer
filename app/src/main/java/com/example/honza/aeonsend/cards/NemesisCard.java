@@ -4,6 +4,8 @@ import com.example.honza.aeonsend.enums.CardType;
 import com.example.honza.aeonsend.enums.Expansion;
 import com.example.honza.aeonsend.enums.PriceRange;
 
+import java.io.Serializable;
+
 /**
  * Created by honza on 3.9.17.
  */

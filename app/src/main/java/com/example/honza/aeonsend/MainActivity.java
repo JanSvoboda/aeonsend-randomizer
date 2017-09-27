@@ -20,7 +20,7 @@ import com.example.honza.aeonsend.adapter.MarketGridViewAdapter;
 import com.example.honza.aeonsend.adapter.MarketListViewAdapter;
 import com.example.honza.aeonsend.cards.Card;
 import com.example.honza.aeonsend.database.DatabaseHandler;
-import com.example.honza.aeonsend.database.MarketCardList;
+import com.example.honza.aeonsend.database.MarketSetupCardList;
 import com.example.honza.aeonsend.enums.CardType;
 
 public class MainActivity extends AppCompatActivity  {
@@ -171,11 +171,11 @@ public class MainActivity extends AppCompatActivity  {
     private void setAdapter() {
         switch (currentViewMode) {
             case VIEW_MODE_LISTVIEW:
-                marketListViewAdapter = new MarketListViewAdapter(this, MarketCardList.getMarketCards());
+                marketListViewAdapter = new MarketListViewAdapter(this, MarketSetupCardList.getMarketSetupCards());
                 listView.setAdapter(marketListViewAdapter);
                 break;
             case VIEW_MODE_GRIDVIEW:
-                marketGridViewAdapter = new MarketGridViewAdapter(this, MarketCardList.getMarketCards());
+                marketGridViewAdapter = new MarketGridViewAdapter(this, MarketSetupCardList.getMarketSetupCards());
                 gridView.setAdapter(marketGridViewAdapter);
                 break;
         }

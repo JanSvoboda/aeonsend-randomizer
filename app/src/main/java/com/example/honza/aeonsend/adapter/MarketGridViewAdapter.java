@@ -10,8 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.honza.aeonsend.R;
-import com.example.honza.aeonsend.cards.MarketCard;
-import com.example.honza.aeonsend.database.MarketCardList;
+import com.example.honza.aeonsend.cards.MarketSetupCard;
+import com.example.honza.aeonsend.database.MarketSetupCardList;
 
 /**
  * Created by honza on 14.9.17.
@@ -20,16 +20,16 @@ import com.example.honza.aeonsend.database.MarketCardList;
 public class MarketGridViewAdapter extends BaseAdapter {
 
     private final Context mContext;
-    private final MarketCard[] marketCards;
+    private final MarketSetupCard[] marketSetupCards;
 
-    public MarketGridViewAdapter(Context mContext, MarketCard[] marketCards) {
+    public MarketGridViewAdapter(Context mContext, MarketSetupCard[] marketSetupCards) {
         this.mContext = mContext;
-        this.marketCards = marketCards;
+        this.marketSetupCards = marketSetupCards;
     }
 
     @Override
     public int getCount() {
-        return MarketCardList.getMarketCards().length;
+        return MarketSetupCardList.getMarketSetupCards().length;
     }
 
     @Override
@@ -46,18 +46,18 @@ public class MarketGridViewAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View view, ViewGroup viewGroup) {
-        final MarketCard marketCard = marketCards[position];
+        final MarketSetupCard marketSetupCard = marketSetupCards[position];
 
         if (view == null) {
             final LayoutInflater layoutInflater = LayoutInflater.from(mContext);
-            view = layoutInflater.inflate(R.layout.grid_item_market_card, null);
+            view = layoutInflater.inflate(R.layout.grid_item_marketsetup_card, null);
         }
 
         final ImageView imageView = view.findViewById(R.id.grid_market_setup_image);
         final TextView textView = view.findViewById(R.id.grid_market_setup_text);
 
-        imageView.setImageResource(marketCard.getImage());
-        textView.setText(marketCard.getName());
+        imageView.setImageResource(marketSetupCard.getImage());
+        textView.setText(marketSetupCard.getName());
 
         return view;
     }

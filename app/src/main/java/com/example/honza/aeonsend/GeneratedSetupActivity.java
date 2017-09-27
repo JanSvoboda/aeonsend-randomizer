@@ -24,7 +24,7 @@ public class GeneratedSetupActivity extends AppCompatActivity implements TabLayo
     private ViewPager viewPager;
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
+    public void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.generated_setup);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_setup);

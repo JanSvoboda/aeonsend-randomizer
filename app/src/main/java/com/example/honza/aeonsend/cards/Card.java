@@ -7,16 +7,18 @@ import com.example.honza.aeonsend.enums.Expansion;
 import com.example.honza.aeonsend.enums.PriceRange;
 import com.example.honza.aeonsend.enums.TableColumns;
 
+import java.io.Serializable;
+
 /**
  * Created by honza on 3.9.17.
  */
 
-public class Card {
-    private int id;
-    private String name;
-    private CardType type;
-    private String picture;
-    private Expansion expansion;
+public class Card implements Serializable{
+    protected int id;
+    protected String name;
+    protected CardType type;
+    protected String picture;
+    protected Expansion expansion;
 
     public Card(int id, String name, CardType type, String picture, Expansion expansion) {
         this.id = id;

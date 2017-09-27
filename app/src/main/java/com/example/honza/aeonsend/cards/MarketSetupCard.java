@@ -12,7 +12,7 @@ import java.util.Map;
  * Created by honza on 14.9.17.
  */
 
-public class MarketCard {
+public class MarketSetupCard {
     private String name;
     private int image;
     private int numberOfGems;
@@ -23,8 +23,8 @@ public class MarketCard {
     private PriceRange[] relicsPriceList;
     private PriceRange[] spellsPriceList;
 
-    public MarketCard(String name, int image, PriceRange[] gemsPriceList,
-                      PriceRange[] relicsPriceList, PriceRange[] spellsPriceList) {
+    public MarketSetupCard(String name, int image, PriceRange[] gemsPriceList,
+                           PriceRange[] relicsPriceList, PriceRange[] spellsPriceList) {
         this.name = name;
         this.image = image;
         this.gemsPriceList = gemsPriceList;
@@ -35,7 +35,7 @@ public class MarketCard {
         this.numberOfSpells = getNumberOfSpells();
 
         if (numberOfGems + numberofRelics + numberOfSpells != 9) {
-            Log.d("CreateMarketCard", "MarketCard: " + name + ", has wrong number of Supply Cards." +
+            Log.d("CreateMarketCard", "MarketSetupCard: " + name + ", has wrong number of Supply Cards." +
                     " Number of provided supply cards is: " + numberOfGems + numberofRelics + numberOfSpells);
         }
     }

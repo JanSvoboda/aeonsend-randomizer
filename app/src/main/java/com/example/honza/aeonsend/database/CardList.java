@@ -32,7 +32,7 @@ public class CardList {
     private static NemesisCard[] nemesisCardList = {
             new NemesisCard("Blight Lord", CardType.NEMESIS, "nemesis_blightlord", Expansion.NAMELESS, "Add an additional supply pile consisting of a number of Tainted Jades equal to the number of players plus four. Place the Tainted Track next to this mat. " +
                     "Place the Blight Lord token on the first space of the Tainted Track."),
-            new NemesisCard("Carapace Queen", CardType.NEMESIS, "nemesis_carapacequeen", Expansion.BASIC, "Place the Husk Track next to this mat, Place two husks into play on thr first two spaces of the Husk Track."),
+            new NemesisCard("Carapace Queen", CardType.NEMESIS, "nemesis_carapacequeen", Expansion.BASIC, "Place the Husk Track next to this mat. Place two husks into play on the first two spaces of the Husk Track."),
             new NemesisCard("Crooked Mask", CardType.NEMESIS, "nemesis_crookedmask", Expansion.BASIC, "Shuffle all of the corruption cards together and place them facedown to form the corruption deck."),
             new NemesisCard("Horde-Crone", CardType.NEMESIS, "nemesis_hordecrone", Expansion.DEPTHS, "Shuffle all of the trogg cards together and place them facedown to form the trogg deck. Draw a card from the trogg deck and place it into play"),
             new NemesisCard("Prince of Gluttons", CardType.NEMESIS, "nemesis_princeofgluttons", Expansion.BASIC, "Place one gem from each gem supply, starting with the most expensive, faceup in a pile next to this mat. This pile is the devoured pile."),
