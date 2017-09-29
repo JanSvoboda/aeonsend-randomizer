@@ -1,12 +1,9 @@
 package com.example.honza.aeonsend;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -26,7 +23,7 @@ public class GeneratedSetupActivity extends AppCompatActivity implements TabLayo
     @Override
     public void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.generated_setup);
+        setContentView(R.layout.activity_generated_setup);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_setup);
         setSupportActionBar(toolbar);
 

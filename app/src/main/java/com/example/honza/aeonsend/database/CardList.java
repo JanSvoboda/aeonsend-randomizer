@@ -1,6 +1,7 @@
 package com.example.honza.aeonsend.database;
 
 import com.example.honza.aeonsend.cards.CharacterCard;
+import com.example.honza.aeonsend.cards.ExpansionCard;
 import com.example.honza.aeonsend.cards.GemCard;
 import com.example.honza.aeonsend.cards.NemesisCard;
 import com.example.honza.aeonsend.cards.RelicCard;
@@ -14,6 +15,12 @@ import com.example.honza.aeonsend.enums.PriceRange;
  */
 
 public class CardList {
+
+    private static ExpansionCard[] expansionCardList = {
+            new ExpansionCard("The Depths", CardType.EXPANSION, "expansion_depths", Expansion.DEPTHS),
+            new ExpansionCard("Nameless", CardType.EXPANSION, "expansion_nameless", Expansion.NAMELESS)
+    };
+
     private static CharacterCard[] characterCardList = {
             new CharacterCard("Adelheim", CardType.CHARACTER, "character_adelheim", Expansion.BASIC),
             new CharacterCard("Brama", CardType.CHARACTER, "character_brama", Expansion.BASIC),
@@ -129,5 +136,13 @@ public class CardList {
 
     public static void setSpellCardList(SpellCard[] spellCardList) {
         CardList.spellCardList = spellCardList;
+    }
+
+    public static ExpansionCard[] getExpansionCardList() {
+        return expansionCardList;
+    }
+
+    public static void setExpansionCardList(ExpansionCard[] expansionCardList) {
+        CardList.expansionCardList = expansionCardList;
     }
 }

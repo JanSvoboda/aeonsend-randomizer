@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:weightSum="9">
+
+    <TextView
+        android:id="@+id/players_fragment_num_players_description_textview"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:text="Number of players"
+        android:textStyle="bold"
+        android:textSize="24dp"
+        android:gravity="bottom|center"
+        android:layout_weight="4"
+        android:textColor="@color/black"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal"
+        android:layout_weight="5">
+
+    <ImageView
+        android:id="@+id/players_fragment_subtract_imageview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_remove_black_48dp"
+        android:layout_margin="5dp"/>
+
+    <TextView
+        android:id="@+id/players_fragment_num_players_value_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="4"
+        android:textStyle="bold"
+        android:textSize="48dp"
+        android:textColor="@color/black"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"/>
+
+    <ImageView
+        android:id="@+id/players_fragment_add_imageview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_add_black_48dp"
+        android:layout_margin="5dp"/>
+    </LinearLayout>
+</LinearLayout>

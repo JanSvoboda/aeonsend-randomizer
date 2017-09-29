@@ -1,10 +1,10 @@
 package com.example.honza.aeonsend.fragments;
 
 import android.database.sqlite.SQLiteDatabase;
-import android.os.Handler;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,17 +13,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.honza.aeonsend.R;
-import com.example.honza.aeonsend.adapter.GeneratedMarketGridViewAdapter;
 import com.example.honza.aeonsend.cards.Card;
 import com.example.honza.aeonsend.cards.NemesisCard;
-import com.example.honza.aeonsend.database.CardList;
 import com.example.honza.aeonsend.database.DatabaseHandler;
 import com.example.honza.aeonsend.enums.CardType;
 import com.example.honza.aeonsend.enums.Expansion;
-import com.example.honza.aeonsend.enums.PriceRange;
 import com.example.honza.aeonsend.utils.Constants;
 
-import java.io.Serializable;
 import java.util.List;
 import java.util.Random;
 
@@ -42,6 +38,7 @@ public class NemesisFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
 
+        // Check if there are some stored values. If yes, then get stored values and use them
         if (savedInstanceState == null) {
             getNemesisCard();
         } else {
@@ -50,17 +47,23 @@ public class NemesisFragment extends Fragment {
         // Create View and display chosen Nemesis
         View view = inflater.inflate(R.layout.nemesis_fragment, container, false);
 
+        // Swipe to refresh functionality
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.nemesis_swiperefresh);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 swipeRefreshLayout.setRefreshing(true);
+                // Wait 1500 ms before going further
                 (new Handler()).postDelayed(new Runnable() {
                     @Override
                     public void run() {
+                        // Get new nemesisCard
                         getNemesisCard();
+                        // Set imageView to new picture
                         imageView.setImageResource(getResources().getIdentifier(nemesisCard.getPicture(), Constants.DRAWABLEDEFTYPE, Constants.PACKAGENAME));
+                        // Set textView to new setup description
                         textView.setText(nemesisCard.getSetupDescription());
+                        // Stop showing refreshing icon
                         swipeRefreshLayout.setRefreshing(false);
                     }
                 }, 1500);
@@ -76,6 +79,8 @@ public class NemesisFragment extends Fragment {
         return view;
     }
 
+
+    // Store nemesisCard for device orientation change ro switching between tabs
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -88,11 +93,11 @@ public class NemesisFragment extends Fragment {
         Expansion[] expansions = {Expansion.BASIC, Expansion.DEPTHS, Expansion.NAMELESS};
 
         // Get access to SQLite DB
-        DatabaseHandler dh = DatabaseHandler.getInstance(getContext());
-        SQLiteDatabase db = dh.getReadableDatabase();
+        DatabaseHandler mHandler = DatabaseHandler.getInstance(getContext());
+        SQLiteDatabase mDatabase = mHandler.getReadableDatabase();
 
         // Get all nemesis cards from DB
-        List<Card> cards = dh.getAll(db, CardType.NEMESIS, expansions);
+        List<Card> cards = mHandler.getAll(mDatabase, CardType.NEMESIS, expansions);
 
         // Get random nemesis for play
         Random random = new Random();
@@ -100,7 +105,9 @@ public class NemesisFragment extends Fragment {
 
         nemesisCard = (NemesisCard) cards.get(value);
 
-        dh.close();
+        mDatabase.close();
+
+        mHandler.close();
 
     }
 }

@@ -9,6 +9,7 @@ import android.util.Log;
 
 import com.example.honza.aeonsend.cards.Card;
 import com.example.honza.aeonsend.cards.CharacterCard;
+import com.example.honza.aeonsend.cards.ExpansionCard;
 import com.example.honza.aeonsend.cards.NemesisCard;
 import com.example.honza.aeonsend.cards.SupplyCard;
 import com.example.honza.aeonsend.enums.CardType;
@@ -60,37 +61,43 @@ public class DatabaseHandler extends SQLiteOpenHelper implements CardDAO {
 
         for (String tableName : Constants.tables) {
             switch (tableName) {
+                case "expansion":
+                    sqLiteDatabase.execSQL(createExpansionTable());
+                    for (ExpansionCard card : CardList.getExpansionCardList()) {
+                        addCard(sqLiteDatabase, card, tableName);
+                    }
+                    break;
                 case "nemesis":
                     // Create Nemesis Table and insert cards
-                    sqLiteDatabase.execSQL(CreateNemesisTable());
+                    sqLiteDatabase.execSQL(createNemesisTable());
                     for (NemesisCard card : CardList.getNemesisCardList()) {
                         addCard(sqLiteDatabase, card, tableName);
                     }
                     break;
                 // Create Character Table and insert cards
                 case "character":
-                    sqLiteDatabase.execSQL(CreateCharacterTable());
+                    sqLiteDatabase.execSQL(createCharacterTable());
                     for (CharacterCard card : CardList.getCharacterCardList()) {
                         addCard(sqLiteDatabase, card, tableName);
                     }
                     break;
                 // Create Gem Table and insert cards
                 case "gem":
-                    sqLiteDatabase.execSQL(CreateMarketTable(tableName));
+                    sqLiteDatabase.execSQL(createMarketTable(tableName));
                     for (SupplyCard card : CardList.getGemCardList()) {
                         addCard(sqLiteDatabase, card, tableName);
                     }
                     break;
                 // Create Relic Table and insert cards
                 case "relic":
-                    sqLiteDatabase.execSQL(CreateMarketTable(tableName));
+                    sqLiteDatabase.execSQL(createMarketTable(tableName));
                     for (SupplyCard card : CardList.getRelicCardList()) {
                         addCard(sqLiteDatabase, card, tableName);
                     }
                     break;
                 // Create Spell Table and insert cards
                 case "spell":
-                    sqLiteDatabase.execSQL(CreateMarketTable(tableName));
+                    sqLiteDatabase.execSQL(createMarketTable(tableName));
                     for (SupplyCard card : CardList.getSpellCardList()) {
                         addCard(sqLiteDatabase, card, tableName);
                     }
@@ -129,6 +136,13 @@ public class DatabaseHandler extends SQLiteOpenHelper implements CardDAO {
     }
 
     @Override
+    public boolean addCard(SQLiteDatabase db, ExpansionCard card, String tableName) {
+        ContentValues values = new ContentValues();
+        return addCard(db, card, tableName, values);
+    }
+
+
+    @Override
     public boolean addCard(SQLiteDatabase db, NemesisCard card, String tableName) {
         ContentValues values = new ContentValues();
         values.put(TableColumns.KEY_SETUPDESCRIPTION.getValue(), card.getSetupDescription());
@@ -151,6 +165,26 @@ public class DatabaseHandler extends SQLiteOpenHelper implements CardDAO {
         String tableName = type.getValue();
         Cursor cursor = db.rawQuery("SELECT * from " + tableName + " where " +
                 TableColumns.KEY_ID.getValue() + "=" + id, null);
+
+        Card card = null;
+
+        if (cursor.moveToFirst()) {
+            try {
+                card = Card.getCardFromCursor(cursor);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        cursor.close();
+        return card;
+    }
+
+    @Override
+    public Card getCard(SQLiteDatabase db, String cardName, CardType type) {
+        String tableName = type.getValue();
+        Cursor cursor = db.rawQuery("SELECT * from " + tableName + " where " +
+                TableColumns.KEY_NAME.getValue() + "=" + cardName, null);
 
         Card card = null;
 
@@ -297,35 +331,73 @@ public class DatabaseHandler extends SQLiteOpenHelper implements CardDAO {
         return sb.toString();
     }
 
-    private String CreateNemesisTable() {
-        String CREATE_TABLE = "CREATE TABLE " + Constants.NEMESISTABLE + "(" +
+    private StringBuilder createTableCommonColumns(String tableName) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("CREATE TABLE " + tableName + "(" +
                 TableColumns.KEY_ID.getValue() + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                 TableColumns.KEY_NAME.getValue() + " TEXT," +
                 TableColumns.KEY_TYPE.getValue() + " TEXT," +
                 TableColumns.KEY_PICTURE.getValue() + " TEXT," +
-                TableColumns.KEY_EXPANSION.getValue() + " TEXT," +
-                TableColumns.KEY_SETUPDESCRIPTION.getValue() + " TEXT" + ")";
-        return CREATE_TABLE;
+                TableColumns.KEY_EXPANSION.getValue() + " TEXT");
+        return sb;
     }
 
-    private String CreateCharacterTable() {
-        String CREATE_TABLE = "CREATE TABLE " + Constants.CHARACTERTABLE + "(" +
-                TableColumns.KEY_ID.getValue() + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-                TableColumns.KEY_NAME.getValue() + " TEXT," +
-                TableColumns.KEY_TYPE.getValue() + " TEXT," +
-                TableColumns.KEY_PICTURE.getValue() + " TEXT," +
-                TableColumns.KEY_EXPANSION.getValue() + " TEXT" + ")";
-        return CREATE_TABLE;
+    private String createNemesisTable() {
+        StringBuilder sb = createTableCommonColumns(Constants.NEMESISTABLE);
+        sb.append("," + TableColumns.KEY_SETUPDESCRIPTION.getValue() + " TEXT" + ")");
+
+        return sb.toString();
+//        String CREATE_TABLE = "CREATE TABLE " + Constants.NEMESISTABLE + "(" +
+//                TableColumns.KEY_ID.getValue() + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+//                TableColumns.KEY_NAME.getValue() + " TEXT," +
+//                TableColumns.KEY_TYPE.getValue() + " TEXT," +
+//                TableColumns.KEY_PICTURE.getValue() + " TEXT," +
+//                TableColumns.KEY_EXPANSION.getValue() + " TEXT," +
+//                TableColumns.KEY_SETUPDESCRIPTION.getValue() + " TEXT" + ")";
+//        return CREATE_TABLE;
     }
 
-    private String CreateMarketTable(String tableName) {
-        String CREATE_TABLE = "CREATE TABLE " + tableName + "(" +
-                TableColumns.KEY_ID.getValue() + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-                TableColumns.KEY_NAME.getValue() + " TEXT," +
-                TableColumns.KEY_TYPE.getValue() + " TEXT," +
-                TableColumns.KEY_PICTURE.getValue() + " TEXT," +
-                TableColumns.KEY_PRICE.getValue() + " INTEGER, " +
-                TableColumns.KEY_EXPANSION.getValue() + " TEXT" + ")";
-        return CREATE_TABLE;
+    private String createCharacterTable() {
+        StringBuilder sb = createTableCommonColumns(Constants.CHARACTERTABLE);
+        sb.append(")");
+
+        return sb.toString();
+
+//        String CREATE_TABLE = "CREATE TABLE " + Constants.CHARACTERTABLE + "(" +
+//                TableColumns.KEY_ID.getValue() + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+//                TableColumns.KEY_NAME.getValue() + " TEXT," +
+//                TableColumns.KEY_TYPE.getValue() + " TEXT," +
+//                TableColumns.KEY_PICTURE.getValue() + " TEXT," +
+//                TableColumns.KEY_EXPANSION.getValue() + " TEXT" + ")";
+//        return CREATE_TABLE;
+    }
+
+    private String createExpansionTable() {
+        StringBuilder sb = createTableCommonColumns(Constants.EXPANSIONTABLE);
+        sb.append(")");
+
+        return sb.toString();
+//        String CREATE_TABLE = "CREATE TABLE " + Constants.EXPANSIONTABLE + "(" +
+//                TableColumns.KEY_ID.getValue() + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+//                TableColumns.KEY_NAME.getValue() + " TEXT," +
+//                TableColumns.KEY_TYPE.getValue() + " TEXT," +
+//                TableColumns.KEY_PICTURE.getValue() + " TEXT," +
+//                TableColumns.KEY_EXPANSION.getValue() + " TEXT" + ")";
+//        return CREATE_TABLE;
+    }
+
+    private String createMarketTable(String tableName) {
+        StringBuilder sb = createTableCommonColumns(tableName);
+        sb.append("," + TableColumns.KEY_PRICE.getValue() + " INTEGER" + ")");
+
+        return sb.toString();
+//        String CREATE_TABLE = "CREATE TABLE " + tableName + "(" +
+//                TableColumns.KEY_ID.getValue() + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+//                TableColumns.KEY_NAME.getValue() + " TEXT," +
+//                TableColumns.KEY_TYPE.getValue() + " TEXT," +
+//                TableColumns.KEY_PICTURE.getValue() + " TEXT," +
+//                TableColumns.KEY_PRICE.getValue() + " INTEGER, " +
+//                TableColumns.KEY_EXPANSION.getValue() + " TEXT" + ")";
+//        return CREATE_TABLE;
     }
 }

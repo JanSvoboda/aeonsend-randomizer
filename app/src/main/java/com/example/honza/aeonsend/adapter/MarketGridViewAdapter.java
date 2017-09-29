@@ -50,7 +50,7 @@ public class MarketGridViewAdapter extends BaseAdapter {
 
         if (view == null) {
             final LayoutInflater layoutInflater = LayoutInflater.from(mContext);
-            view = layoutInflater.inflate(R.layout.grid_item_marketsetup_card, null);
+            view = layoutInflater.inflate(R.layout.setup_fragment_gridview_item, null);
         }
 
         final ImageView imageView = view.findViewById(R.id.grid_market_setup_image);

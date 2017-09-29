@@ -5,6 +5,7 @@ package com.example.honza.aeonsend.enums;
  */
 
 public enum CardType {
+    EXPANSION("expansion"),
     SPELL("spell"),
     RELIC("relic"),
     GEM("gem"),

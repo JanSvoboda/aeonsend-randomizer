@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.example.honza.aeonsend.cards.Card;
 import com.example.honza.aeonsend.cards.CharacterCard;
+import com.example.honza.aeonsend.cards.ExpansionCard;
 import com.example.honza.aeonsend.cards.GemCard;
 import com.example.honza.aeonsend.cards.NemesisCard;
 import com.example.honza.aeonsend.cards.RelicCard;
@@ -25,11 +26,15 @@ public interface CardDAO {
 
     boolean addCard(SQLiteDatabase db, CharacterCard card, String tableName);
 
+    boolean addCard(SQLiteDatabase db, ExpansionCard card, String tableName);
+
     boolean addCard(SQLiteDatabase db, NemesisCard card, String tableName);
 
     boolean addCard(SQLiteDatabase db, SupplyCard card, String tableName);
 
     Card getCard(SQLiteDatabase db, int id, CardType type);
+
+    Card getCard(SQLiteDatabase db, String cardName, CardType type);
 
     int updateCard(Card card, String tableName, ContentValues values);
 

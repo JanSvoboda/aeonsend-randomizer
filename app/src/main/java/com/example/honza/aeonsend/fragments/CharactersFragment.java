@@ -86,11 +86,11 @@ public class CharactersFragment extends Fragment {
         Expansion[] expansions = {Expansion.BASIC};
 
         // Get access to SQLite DB
-        DatabaseHandler dh = DatabaseHandler.getInstance(getContext());
-        SQLiteDatabase db = dh.getReadableDatabase();
+        DatabaseHandler mHandler = DatabaseHandler.getInstance(getContext());
+        SQLiteDatabase mDatabase = mHandler.getReadableDatabase();
 
         // Get all nemesis cards from DB
-        List<Card> cards = dh.getAll(db, CardType.CHARACTER, expansions);
+        List<Card> cards = mHandler.getAll(mDatabase, CardType.CHARACTER, expansions);
 
         for (int i = 0; i < 4; i++) {
             Random random = new Random();
@@ -101,7 +101,9 @@ public class CharactersFragment extends Fragment {
 
             characterCards.add(characterCard);
         }
-        dh.close();
+
+        mDatabase.close();
+        mHandler.close();
 
     }
 }

@@ -27,7 +27,7 @@
             android:id="@+id/tabLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/toolbar"
+            android:layout_below="@id/toolbar_setup"
             app:theme="@style/AppTheme.PopupOverlay" />
 
         <android.support.v4.view.ViewPager

@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
-import android.widget.ImageView;
 
 import com.example.honza.aeonsend.R;
 import com.example.honza.aeonsend.adapter.GeneratedMarketGridViewAdapter;
@@ -21,7 +20,6 @@ import com.example.honza.aeonsend.database.MarketSetupCardList;
 import com.example.honza.aeonsend.enums.CardType;
 import com.example.honza.aeonsend.enums.Expansion;
 import com.example.honza.aeonsend.enums.PriceRange;
-import com.example.honza.aeonsend.utils.Constants;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -141,5 +139,6 @@ public class MarketFragment extends Fragment {
         }
 
         mDatabase.close();
+        mHandler.close();
     }
 }

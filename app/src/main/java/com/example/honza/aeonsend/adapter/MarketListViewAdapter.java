@@ -51,7 +51,7 @@ public class MarketListViewAdapter extends BaseAdapter {
 
         if (convertView == null) {
             final LayoutInflater layoutInflater = LayoutInflater.from(mContext);
-            convertView = layoutInflater.inflate(R.layout.line_item_market_card, null);
+            convertView = layoutInflater.inflate(R.layout.setup_fragment_listview_item, null);
         }
 
         final ImageView imageView = convertView.findViewById(R.id.imageMarketSetup);

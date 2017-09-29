@@ -49,8 +49,8 @@ public class MainActivity extends AppCompatActivity  {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        stubGrid = (ViewStub) findViewById(R.id.stub_grid);
-        stubList = (ViewStub) findViewById(R.id.stub_list);
+        stubGrid = (ViewStub) findViewById(R.id.setup_fragment_stub_grid);
+        stubList = (ViewStub) findViewById(R.id.setup_fragment_stub_list);
 
         stubGrid.inflate();
         stubList.inflate();

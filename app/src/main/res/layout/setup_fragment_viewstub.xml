@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.example.honza.aeonsend.MainActivity"
+    tools:showIn="@layout/activity_main"
+    >
+
+
+    <!--android:horizontalSpacing="5dp"-->
+    <!--android:verticalSpacing="5dp"-->
+    <ViewStub
+        android:id="@+id/setup_fragment_stub_list"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:inflatedId="@+id/showlayout"
+        android:layout="@layout/setup_fragment_listview" />
+
+    <ViewStub
+        android:id="@+id/setup_fragment_stub_grid"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:inflatedId="@+id/showlayout"
+        android:layout="@layout/setup_fragment_gridview" />
+
+</android.support.constraint.ConstraintLayout>

@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.example.honza.aeonsend.R;
 import com.example.honza.aeonsend.cards.Card;
@@ -57,7 +56,7 @@ public class GeneratedMarketGridViewAdapter extends BaseAdapter {
 
         if (view == null) {
             final LayoutInflater layoutInflater = LayoutInflater.from(mContext);
-            view = layoutInflater.inflate(R.layout.fragment_gridview_item, null);
+            view = layoutInflater.inflate(R.layout.market_fragment_gridview_item, null);
         }
 
         final ImageView imageView = view.findViewById(R.id.fragment_gridview_image);
