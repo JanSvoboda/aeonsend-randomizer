@@ -2,25 +2,27 @@ package com.example.honza.aeonsend;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.example.honza.aeonsend.fragments.CharactersFragment;
+import com.example.honza.aeonsend.fragments.ExpansionFragment;
 import com.example.honza.aeonsend.fragments.MarketFragment;
 import com.example.honza.aeonsend.fragments.NemesisFragment;
+import com.example.honza.aeonsend.fragments.PlayersFragment;
+import com.example.honza.aeonsend.fragments.SetupFragment;
 
 /**
  * Created by honza on 21.9.17.
  */
 
 //Extending FragmentStatePagerAdapter
-public class Pager extends FragmentStatePagerAdapter {
+public class MainPager extends FragmentStatePagerAdapter {
 
     //integer to count number of tabs
     int tabCount;
 
     //Constructor to the class
-    public Pager(FragmentManager fm, int tabCount) {
+    public MainPager(FragmentManager fm, int tabCount) {
         super(fm);
         //Initializing tab count
         this.tabCount = tabCount;
@@ -32,14 +34,16 @@ public class Pager extends FragmentStatePagerAdapter {
         //Returning the current tabs
         switch (position) {
             case 0:
-                NemesisFragment nemesisFragment = new NemesisFragment();
-                return nemesisFragment;
+                PlayersFragment playersFragment = new PlayersFragment();
+                return playersFragment;
             case 1:
-                CharactersFragment charactersFragment = new CharactersFragment();
-                return charactersFragment;
+//                PlayersFragment playersFragment2 = new PlayersFragment();
+//                return playersFragment2;
+                ExpansionFragment expansionFragment = new ExpansionFragment();
+                return expansionFragment;
             case 2:
-                MarketFragment marketFragment = new MarketFragment();
-                return marketFragment;
+                SetupFragment setupFragment = new SetupFragment();
+                return setupFragment;
             default:
                 return null;
         }

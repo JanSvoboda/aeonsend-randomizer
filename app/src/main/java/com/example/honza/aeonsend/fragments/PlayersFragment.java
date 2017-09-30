@@ -3,6 +3,7 @@ package com.example.honza.aeonsend.fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,20 +39,26 @@ public class PlayersFragment extends Fragment {
         textView.setText(String.valueOf(numPlayers));
 
         subtractImageView = view.findViewById(R.id.players_fragment_subtract_imageview);
-        subtractImageView.setImageResource(R.drawable.ic_remove_white_48dp);
+        subtractImageView.setImageResource(R.drawable.ic_remove_black_48dp);
         subtractImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                numPlayers--;
+                if (numPlayers != 1) {
+                    numPlayers--;
+                }
+                textView.setText(String.valueOf(numPlayers));
             }
         });
 
         addImageView = view.findViewById(R.id.players_fragment_add_imageview);
-        addImageView.setImageResource(R.drawable.ic_add_white_48dp);
+        addImageView.setImageResource(R.drawable.ic_add_black_48dp);
         addImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                numPlayers++;
+                if (numPlayers != 4) {
+                    numPlayers++;
+                }
+                textView.setText(String.valueOf(numPlayers));
             }
         });
 

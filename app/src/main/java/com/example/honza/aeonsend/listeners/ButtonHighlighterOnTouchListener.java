@@ -3,6 +3,7 @@ package com.example.honza.aeonsend.listeners;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -35,7 +36,10 @@ public class ButtonHighlighterOnTouchListener implements View.OnTouchListener {
         if (imageView != null) {
             if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
                 imageView.setColorFilter(FILTERED_GREY);
+                Log.d("TOUCH", "onTouch: " + "DOWN");
+                return true;
             } else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                Log.d("TOUCH", "onTouch: " + "UP");
                 imageView.setColorFilter(TRANSPARENT_GREY); // or null
             }
         } else {

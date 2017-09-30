@@ -11,26 +11,54 @@
         android:layout_height="0dp"
         android:layout_weight="1" />
 
-    <ImageView
-        android:id="@+id/expansion_fragment_depths_imageview"
+    <FrameLayout
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_weight="3"
-        android:adjustViewBounds="true"
-        android:src="@drawable/expansion_depths" />
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/expansion_fragment_depths_imageview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:src="@drawable/expansion_depths" />
+
+        <ImageView
+            android:id="@+id/expansion_fragment_depths_selected_imageview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:layout_margin="10dp"
+            android:src="@drawable/ic_check_box_outline_blank_white_24dp" />
+    </FrameLayout>
 
     <android.support.v4.widget.Space
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1" />
 
-    <ImageView
-        android:id="@+id/expansion_fragment_nameless_imageview"
+    <FrameLayout
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_weight="3"
-        android:adjustViewBounds="true"
-        android:src="@drawable/expansion_nameless" />
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/expansion_fragment_nameless_imageview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:src="@drawable/expansion_nameless" />
+
+        <ImageView
+            android:id="@+id/expansion_fragment_nameless_selected_imageview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:layout_margin="10dp"
+            android:src="@drawable/ic_check_box_white_24dp" />
+    </FrameLayout>
 
     <android.support.v4.widget.Space
         android:layout_width="match_parent"

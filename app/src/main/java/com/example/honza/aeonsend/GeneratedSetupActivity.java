@@ -24,11 +24,11 @@ public class GeneratedSetupActivity extends AppCompatActivity implements TabLayo
     public void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_generated_setup);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_setup);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_generatedsetup);
         setSupportActionBar(toolbar);
 
         //Initializing the tablayout
-        tabLayout = (TabLayout) findViewById(R.id.tabLayout);
+        tabLayout = (TabLayout) findViewById(R.id.tabLayout_generatedsetup);
 
         tabLayout.addTab(tabLayout.newTab().setText("Nemesis"));
         tabLayout.addTab(tabLayout.newTab().setText("Characters"));
@@ -36,10 +36,10 @@ public class GeneratedSetupActivity extends AppCompatActivity implements TabLayo
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         //Initializing viewPager
-        viewPager = (ViewPager) findViewById(R.id.pager);
+        viewPager = (ViewPager) findViewById(R.id.pager_generatedsetup);
 
         //Creating our pager adapter
-        Pager adapter = new Pager(getSupportFragmentManager(), tabLayout.getTabCount());
+        GeneratedSetupPager adapter = new GeneratedSetupPager(getSupportFragmentManager(), tabLayout.getTabCount());
 
         //Adding adapter to pager
         viewPager.setAdapter(adapter);
@@ -50,17 +50,12 @@ public class GeneratedSetupActivity extends AppCompatActivity implements TabLayo
         //Adding onPageChangeListener to select tab after swipe
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
-//        super.onCreate(savedInstanceState, persistentState);
-
+        // Floating action button that returns to Main Activity and finished Generated Setup Activity
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                Intent intent = new Intent(view.getContext(), MainActivity.class);
-                startActivity(intent);
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
+                finish();
             }
         });
     }

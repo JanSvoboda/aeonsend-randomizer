@@ -15,7 +15,7 @@
             android:theme="@style/AppTheme.AppBarOverlay">
 
             <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar_setup"
+                android:id="@+id/toolbar_generatedsetup"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:background="?attr/colorPrimary"
@@ -24,14 +24,13 @@
         </android.support.design.widget.AppBarLayout>
 
         <android.support.design.widget.TabLayout
-            android:id="@+id/tabLayout"
+            android:id="@+id/tabLayout_generatedsetup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/toolbar_setup"
             app:theme="@style/AppTheme.PopupOverlay" />
 
         <android.support.v4.view.ViewPager
-            android:id="@+id/pager"
+            android:id="@+id/pager_generatedsetup"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </LinearLayout>

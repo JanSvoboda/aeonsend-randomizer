@@ -85,6 +85,9 @@ public class Card implements Serializable{
         PriceRange price = null;
 
         switch (type) {
+            case EXPANSION:
+                return new ExpansionCard(id, name, type, picture, expansion);
+
             case CHARACTER:
                 return new CharacterCard(id, name, type, picture, expansion);
 
