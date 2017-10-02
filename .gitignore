@@ -1,12 +1,24 @@
-.gitignore
-*.iml
+# Gradle
 .gradle
-/local.properties
-/.idea/workspace.xml
-/.idea/libraries
-.DS_Store
+
+# Generated files
 /build
 /captures
+
+# IntelliJ
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# Local configuration file (sdk path, etc)
+/local.properties
+
+/.idea/workspace.xml
+/.idea/libraries
+
+# Windows
+.DS_Store
+
 .externalNativeBuild
-.idea
 db
