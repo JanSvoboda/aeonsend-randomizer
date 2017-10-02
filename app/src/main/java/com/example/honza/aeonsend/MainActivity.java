@@ -7,13 +7,19 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
+import com.example.honza.aeonsend.cards.MarketSetupCard;
 import com.example.honza.aeonsend.database.DatabaseHandler;
+import com.example.honza.aeonsend.utils.OnDataPass;
 
-public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSelectedListener{
+import java.io.Serializable;
+import java.util.List;
+
+public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSelectedListener, OnDataPass{
 
     // Setup for TabLayout
     private TabLayout tabLayout;
     private ViewPager viewPager;
+    private Bundle bundle = new Bundle();
 
 
     @Override
@@ -54,6 +60,18 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
     }
 
     @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBundle("fragmentValuesBundle", getFragmentValuesBundle());
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        bundle = savedInstanceState.getBundle("fragmentValuesBundle");
+    }
+
+    @Override
     public void onTabSelected(TabLayout.Tab tab) {
         viewPager.setCurrentItem(tab.getPosition());
     }
@@ -66,5 +84,25 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
     @Override
     public void onTabReselected(TabLayout.Tab tab) {
 
+    }
+
+    @Override
+    public void onDataPass(String name, List list) {
+        bundle.putSerializable(name, (Serializable) list);
+    }
+
+    @Override
+    public void onDataPass(String name, Integer i) {
+        bundle.putInt(name, i);
+    }
+
+    @Override
+    public void onDataPass(String name, MarketSetupCard card) {
+        bundle.putSerializable(name, (Serializable) card);
+    }
+
+    @Override
+    public Bundle getFragmentValuesBundle() {
+        return bundle;
     }
 }

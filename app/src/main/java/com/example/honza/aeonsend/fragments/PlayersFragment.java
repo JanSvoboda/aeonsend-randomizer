@@ -1,5 +1,7 @@
 package com.example.honza.aeonsend.fragments;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -11,6 +13,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.honza.aeonsend.R;
+import com.example.honza.aeonsend.utils.Constants;
+import com.example.honza.aeonsend.utils.OnDataPass;
 
 /**
  * Created by honza on 29.9.17.
@@ -22,6 +26,14 @@ public class PlayersFragment extends Fragment {
     private ImageView subtractImageView;
     private ImageView addImageView;
     private int numPlayers;
+    private Bundle args;
+    private OnDataPass dataPasser;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        dataPasser = (OnDataPass) context;
+    }
 
     @Nullable
     @Override
@@ -32,6 +44,8 @@ public class PlayersFragment extends Fragment {
         } else {
             numPlayers = savedInstanceState.getInt("numPlayers");
         }
+        // Pass number of PLayers to parent Activity
+        passData(numPlayers);
 
         View view = inflater.inflate(R.layout.players_fragment, container, false);
 
@@ -47,6 +61,7 @@ public class PlayersFragment extends Fragment {
                     numPlayers--;
                 }
                 textView.setText(String.valueOf(numPlayers));
+                passData(numPlayers);
             }
         });
 
@@ -59,6 +74,7 @@ public class PlayersFragment extends Fragment {
                     numPlayers++;
                 }
                 textView.setText(String.valueOf(numPlayers));
+                passData(numPlayers);
             }
         });
 
@@ -69,5 +85,9 @@ public class PlayersFragment extends Fragment {
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putInt("numPlayers", numPlayers);
+    }
+
+    public void passData(int numPlayers) {
+        dataPasser.onDataPass(Constants.EXTRASNUMPLAYERS, numPlayers);
     }
 }

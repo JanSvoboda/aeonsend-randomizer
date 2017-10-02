@@ -1,5 +1,6 @@
 package com.example.honza.aeonsend.fragments;
 
+import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,10 +14,14 @@ import com.example.honza.aeonsend.R;
 import com.example.honza.aeonsend.cards.ExpansionCard;
 import com.example.honza.aeonsend.database.DatabaseHandler;
 import com.example.honza.aeonsend.enums.CardType;
+import com.example.honza.aeonsend.enums.Expansion;
 import com.example.honza.aeonsend.utils.Constants;
+import com.example.honza.aeonsend.utils.OnDataPass;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by honza on 29.9.17.
@@ -27,27 +32,43 @@ public class ExpansionFragment extends Fragment {
     private HashMap<String, ExpansionCard> selectedExpansionsMap;
     private ExpansionCard depthsExpansionCard;
     private ExpansionCard namelessExpansionCard;
+    private List<Expansion> expansionList = new ArrayList<>();
+    private OnDataPass dataPasser;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        dataPasser = (OnDataPass) context;
+    }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
+        // Add always present Basic part of the game
+        expansionList.add(Expansion.BASIC);
+
         if (savedInstanceState == null) {
             selectedExpansionsMap = new HashMap<>();
             depthsExpansionCard = getExpansionCard("The Depths");
             namelessExpansionCard = getExpansionCard("Nameless");
-
         } else {
             selectedExpansionsMap = (HashMap<String, ExpansionCard>) savedInstanceState.getSerializable("selectedExpansionsMap");
             depthsExpansionCard = selectedExpansionsMap.get("The Depths");
             if (depthsExpansionCard == null) {
                 depthsExpansionCard = getExpansionCard("The Depths");
+            } else {
+                expansionList.add(Expansion.DEPTHS);
             }
             namelessExpansionCard = selectedExpansionsMap.get("Nameless");
             if (namelessExpansionCard == null) {
                 namelessExpansionCard = getExpansionCard("Nameless");
+            } else {
+                expansionList.add(Expansion.NAMELESS);
             }
         }
+
+        passData(expansionList);
 
         View view = inflater.inflate(R.layout.expansion_fragment, container, false);
 
@@ -127,8 +148,15 @@ public class ExpansionFragment extends Fragment {
         checkBox.setImageResource(expansionCard.isSelected() ? R.drawable.ic_check_box_white_24dp : R.drawable.ic_check_box_outline_blank_white_24dp);
         if (!expansionCard.isSelected()) {
             selectedExpansionsMap.remove(expansionCard.getName());
+            expansionList.remove(expansionCard.getExpansion());
         } else {
             selectedExpansionsMap.put(expansionCard.getName(), expansionCard);
+            expansionList.add(expansionCard.getExpansion());
         }
+        passData(expansionList);
+    }
+
+    private void passData(List list) {
+        dataPasser.onDataPass(Constants.EXTRASSELECTEDEXPANSION, list);
     }
 }

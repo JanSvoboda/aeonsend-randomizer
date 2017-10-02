@@ -19,4 +19,10 @@ public class Constants {
     public final static String RELICTABLE = CardType.RELIC.getValue();
     public final static String SPELLTABLE = CardType.SPELL.getValue();
     public final static String[] tables = {EXPANSIONTABLE, NEMESISTABLE, CHARACTERTABLE, GEMTABLE, RELICTABLE, SPELLTABLE};
+
+    // Extras names
+    public final static String EXTRASNUMPLAYERS = "numPlayers";
+    public final static String EXTRASCHOSENSETUP = "chosenSetup";
+    public final static String EXTRASSELECTEDEXPANSION = "selectedExpansions";
+
 }

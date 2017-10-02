@@ -1,5 +1,6 @@
 package com.example.honza.aeonsend.fragments;
 
+import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Handler;
@@ -19,6 +20,7 @@ import com.example.honza.aeonsend.database.DatabaseHandler;
 import com.example.honza.aeonsend.enums.CardType;
 import com.example.honza.aeonsend.enums.Expansion;
 import com.example.honza.aeonsend.utils.Constants;
+import com.example.honza.aeonsend.utils.GetIntentExtras;
 
 import java.util.List;
 import java.util.Random;
@@ -33,6 +35,14 @@ public class NemesisFragment extends Fragment {
     private SwipeRefreshLayout swipeRefreshLayout;
     private ImageView imageView;
     private TextView textView;
+    private GetIntentExtras getIntentExtras;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        getIntentExtras = (GetIntentExtras) context;
+    }
+
 
     @Nullable
     @Override
@@ -89,8 +99,8 @@ public class NemesisFragment extends Fragment {
 
     private void getNemesisCard() {
 
-        // TODO fake value - expansion will be taken from user's choice, but Expansion.BASIC is always included
-        Expansion[] expansions = {Expansion.BASIC, Expansion.DEPTHS, Expansion.NAMELESS};
+        // Fetch array of Expansions from Intent Extras
+        Expansion[] expansions = getIntentExtras.getExpansions();
 
         // Get access to SQLite DB
         DatabaseHandler mHandler = DatabaseHandler.getInstance(getContext());

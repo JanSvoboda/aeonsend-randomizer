@@ -34,13 +34,11 @@ public class MarketGridViewAdapter extends BaseAdapter {
 
     @Override
     public Object getItem(int i) {
-        Log.d("GETITEM", "getItem: " + i);
-        return null;
+        return marketSetupCards[i];
     }
 
     @Override
     public long getItemId(int i) {
-        Log.d("GETITEMID", "getItemId: " + i);
         return 0;
     }
 

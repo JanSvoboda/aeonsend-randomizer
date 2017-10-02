@@ -1,8 +1,8 @@
 package com.example.honza.aeonsend.fragments;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -21,10 +21,10 @@ import com.example.honza.aeonsend.GeneratedSetupActivity;
 import com.example.honza.aeonsend.R;
 import com.example.honza.aeonsend.adapter.MarketGridViewAdapter;
 import com.example.honza.aeonsend.adapter.MarketListViewAdapter;
-import com.example.honza.aeonsend.cards.Card;
-import com.example.honza.aeonsend.database.DatabaseHandler;
+import com.example.honza.aeonsend.cards.MarketSetupCard;
 import com.example.honza.aeonsend.database.MarketSetupCardList;
-import com.example.honza.aeonsend.enums.CardType;
+import com.example.honza.aeonsend.utils.Constants;
+import com.example.honza.aeonsend.utils.OnDataPass;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -40,11 +40,18 @@ public class SetupFragment extends Fragment {
     private MarketGridViewAdapter marketGridViewAdapter;
     private MarketListViewAdapter marketListViewAdapter;
     private View view;
+    private OnDataPass dataPasser;
 
     private int currentViewMode = 0;
 
     static final int VIEW_MODE_LISTVIEW = 0;
     static final int VIEW_MODE_GRIDVIEW = 1;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        dataPasser = (OnDataPass) context;
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -75,7 +82,13 @@ public class SetupFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                // Get MarketSetupCard from adapterView and pass it to Activity
+                passData((MarketSetupCard) adapterView.getItemAtPosition(i));
+                // Fetch data from activity into bundle object and pass it to second activity via intent
+                Bundle bundle = dataPasser.getFragmentValuesBundle();
+                // Start new activity
                 Intent intent = new Intent(view.getContext(), GeneratedSetupActivity.class);
+                intent.putExtras(bundle);
                 startActivity(intent);
             }
         });
@@ -83,7 +96,13 @@ public class SetupFragment extends Fragment {
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                // Get MarketSetupCard from adapterView and pass it to Activity
+                passData((MarketSetupCard) adapterView.getItemAtPosition(i));
+                // Fetch data from activity into bundle object and pass it to second activity via intent
+                Bundle bundle = dataPasser.getFragmentValuesBundle();
+                // Start new activity
                 Intent intent = new Intent(view.getContext(), GeneratedSetupActivity.class);
+                intent.putExtras(bundle);
                 startActivity(intent);
             }
         });
@@ -179,5 +198,9 @@ public class SetupFragment extends Fragment {
                 gridView.setAdapter(marketGridViewAdapter);
                 break;
         }
+    }
+
+    private void passData(MarketSetupCard card) {
+        dataPasser.onDataPass(Constants.EXTRASCHOSENSETUP, card);
     }
 }

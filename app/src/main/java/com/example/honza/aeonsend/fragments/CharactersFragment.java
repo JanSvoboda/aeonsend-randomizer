@@ -1,5 +1,6 @@
 package com.example.honza.aeonsend.fragments;
 
+import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Handler;
@@ -18,6 +19,7 @@ import com.example.honza.aeonsend.cards.CharacterCard;
 import com.example.honza.aeonsend.database.DatabaseHandler;
 import com.example.honza.aeonsend.enums.CardType;
 import com.example.honza.aeonsend.enums.Expansion;
+import com.example.honza.aeonsend.utils.GetIntentExtras;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -34,10 +36,21 @@ public class CharactersFragment extends Fragment {
     private GeneratedMarketGridViewAdapter generatedMarketGridViewAdapter;
     private List<Card> characterCards;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private GetIntentExtras getIntentExtras;
+    private int numPlayers;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        getIntentExtras = (GetIntentExtras) context;
+    }
 
     @Nullable
     @Override
     public View onCreateView(final LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable final Bundle savedInstanceState) {
+
+        // Get number of players from Activity
+        numPlayers = getIntentExtras.getPlayers();
 
         if (savedInstanceState == null) {
             getCharacterCards();
@@ -82,8 +95,8 @@ public class CharactersFragment extends Fragment {
 
         characterCards = new ArrayList<>();
 
-        // TODO fake value - expansion will be taken from user's choice, but Expansion.BASIC is always included
-        Expansion[] expansions = {Expansion.BASIC};
+        // Get array of Expansions form Intent Extras
+        Expansion[] expansions = getIntentExtras.getExpansions();
 
         // Get access to SQLite DB
         DatabaseHandler mHandler = DatabaseHandler.getInstance(getContext());
@@ -92,7 +105,7 @@ public class CharactersFragment extends Fragment {
         // Get all nemesis cards from DB
         List<Card> cards = mHandler.getAll(mDatabase, CardType.CHARACTER, expansions);
 
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < numPlayers; i++) {
             Random random = new Random();
             int value = random.nextInt(cards.size());
 

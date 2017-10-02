@@ -1,5 +1,6 @@
 package com.example.honza.aeonsend.fragments;
 
+import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Handler;
@@ -20,6 +21,7 @@ import com.example.honza.aeonsend.database.MarketSetupCardList;
 import com.example.honza.aeonsend.enums.CardType;
 import com.example.honza.aeonsend.enums.Expansion;
 import com.example.honza.aeonsend.enums.PriceRange;
+import com.example.honza.aeonsend.utils.GetIntentExtras;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -39,6 +41,14 @@ public class MarketFragment extends Fragment {
     private SQLiteDatabase mDatabase = null;
     private Expansion[] expansions = null;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private GetIntentExtras getIntentExtras;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        getIntentExtras = (GetIntentExtras) context;
+    }
+
 
     @Nullable
     @Override
@@ -97,6 +107,7 @@ public class MarketFragment extends Fragment {
 
     }
 
+    // Get suitable cards for chosen Setup and save it to List used by Grid View adapter
     private void addToChosenCardList(PriceRange priceRange, CardType type) {
         try {
             // Get cards based on Price
@@ -113,6 +124,7 @@ public class MarketFragment extends Fragment {
         }
     }
 
+    //  
     private void getChosenCards() {
 
         // Get DatabaseHandler and Database
@@ -120,9 +132,9 @@ public class MarketFragment extends Fragment {
         mDatabase = mHandler.getReadableDatabase();
         chosenCards = new ArrayList<>();
 
-        //TODO fake value of MarketSetupCard - marketcard will be taken from user's choice, Expansion[] is set to Basic
-        MarketSetupCard marketSetupCard = MarketSetupCardList.getMarketSetupCards()[3];
-        expansions = new Expansion[]{Expansion.BASIC, Expansion.DEPTHS, Expansion.NAMELESS};
+        //Fetch Market Setup Card from activity Intents
+        MarketSetupCard marketSetupCard = getIntentExtras.getSetup();
+        expansions = getIntentExtras.getExpansions();
 
         // Create supply of cards for market
 

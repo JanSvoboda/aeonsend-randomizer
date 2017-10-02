@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.example.honza.aeonsend.enums.PriceRange;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -12,7 +13,7 @@ import java.util.Map;
  * Created by honza on 14.9.17.
  */
 
-public class MarketSetupCard {
+public class MarketSetupCard implements Serializable {
     private String name;
     private int image;
     private int numberOfGems;
