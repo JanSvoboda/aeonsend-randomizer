@@ -124,7 +124,7 @@ public class MarketFragment extends Fragment {
         }
     }
 
-    //  
+    //
     private void getChosenCards() {
 
         // Get DatabaseHandler and Database

@@ -4,4 +4,5 @@
     <string name="select_market_setup">Select Market Setup</string>
     <string name="action_layout">Switch Layout</string>
     <string name="nemesis_setup">Setup</string>
+    <string name="number_of_players">Number of Players</string>
 </resources>

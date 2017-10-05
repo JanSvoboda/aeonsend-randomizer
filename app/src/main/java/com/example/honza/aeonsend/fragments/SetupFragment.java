@@ -113,10 +113,11 @@ public class SetupFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        inflater.inflate(R.menu.menu_main, menu);
+//        inflater.inflate(R.menu.menu_main, menu);
 
-        // Find button for layout switching and set it to correct icon correlated to currentViewMode
+        // Find button for layout switching and set it to correct icon correlated to currentViewMode and make it visible
         MenuItem switchLayoutButton = menu.findItem(R.id.action_switch_layout);
+        switchLayoutButton.setVisible(true);
 
         SharedPreferences sharedPreferences = view.getContext().getSharedPreferences("ViewMode", MODE_PRIVATE);
         currentViewMode = sharedPreferences.getInt("currentViewMode", VIEW_MODE_LISTVIEW);

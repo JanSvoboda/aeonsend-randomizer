@@ -1,29 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/market_cards_row"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:orientation="vertical"
-    android:padding="10dp">
-
-    <ImageView
-        android:id="@+id/grid_market_setup_image"
-        android:layout_width="130dp"
-        android:layout_height="wrap_content"
-        android:adjustViewBounds="true"
-        android:cropToPadding="true"
-        android:scaleType="centerInside"
-        app:srcCompat="@drawable/market_setup_random"
-        android:layout_gravity="center"/>
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/grid_market_setup_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="Random Setup"
-        android:textAllCaps="false"
-        android:textStyle="normal" />
-</LinearLayout>
+        android:layout_alignLeft="@+id/grid_market_setup_image"
+        android:layout_alignStart="@+id/grid_market_setup_image"
+        android:text="random setup"
+        android:textSize="17sp"
+        android:textStyle="normal"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="10dp"/>
+
+    <ImageView
+        android:id="@+id/grid_market_setup_image"
+        android:layout_below="@+id/grid_market_setup_text"
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        android:adjustViewBounds="true"
+        android:cropToPadding="true"
+        android:scaleType="centerInside"
+        app:srcCompat="@drawable/market_setup_random" />
+
+
+</RelativeLayout>
