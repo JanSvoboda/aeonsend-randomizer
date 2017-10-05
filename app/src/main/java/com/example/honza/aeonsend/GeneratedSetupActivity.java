@@ -8,6 +8,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.example.honza.aeonsend.cards.MarketSetupCard;
@@ -41,6 +42,10 @@ public class GeneratedSetupActivity extends AppCompatActivity implements TabLayo
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_generatedsetup);
         setSupportActionBar(toolbar);
 
+        // Add back button to actionbar
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
         //Initializing the tablayout
         tabLayout = (TabLayout) findViewById(R.id.tabLayout_generatedsetup);
 
@@ -64,14 +69,26 @@ public class GeneratedSetupActivity extends AppCompatActivity implements TabLayo
         //Adding onPageChangeListener to select tab after swipe
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
-        // Floating action button that returns to Main Activity and finished Generated Setup Activity
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+//        // Floating action button that returns to Main Activity and finishes Generated Setup Activity
+//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                finish();
+//            }
+//        });
+    }
+
+
+    // Finish activity when back button is pressed
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // handle arrow click here
+        if (item.getItemId() == android.R.id.home) {
+            finish(); // close this activity and return to preview activity (if there is any)
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
