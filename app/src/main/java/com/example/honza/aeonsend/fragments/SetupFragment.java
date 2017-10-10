@@ -116,7 +116,7 @@ public class SetupFragment extends Fragment {
 //        inflater.inflate(R.menu.menu_main, menu);
 
         // Find button for layout switching and set it to correct icon correlated to currentViewMode and make it visible
-        MenuItem switchLayoutButton = menu.findItem(R.id.action_switch_layout);
+        MenuItem switchLayoutButton = menu.findItem(R.id.main_menu_action_switch_layout);
         switchLayoutButton.setVisible(true);
 
         SharedPreferences sharedPreferences = view.getContext().getSharedPreferences("ViewMode", MODE_PRIVATE);
@@ -141,7 +141,7 @@ public class SetupFragment extends Fragment {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_switch_layout) {
+        if (id == R.id.main_menu_action_switch_layout) {
 
             switch (currentViewMode) {
                 case VIEW_MODE_LISTVIEW:

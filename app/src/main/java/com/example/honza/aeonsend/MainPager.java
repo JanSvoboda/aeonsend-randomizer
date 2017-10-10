@@ -36,12 +36,12 @@ public class MainPager extends FragmentStatePagerAdapter {
             case 0:
                 PlayersFragment playersFragment = new PlayersFragment();
                 return playersFragment;
+//            case 1:
+////                PlayersFragment playersFragment2 = new PlayersFragment();
+////                return playersFragment2;
+//                ExpansionFragment expansionFragment = new ExpansionFragment();
+//                return expansionFragment;
             case 1:
-//                PlayersFragment playersFragment2 = new PlayersFragment();
-//                return playersFragment2;
-                ExpansionFragment expansionFragment = new ExpansionFragment();
-                return expansionFragment;
-            case 2:
                 SetupFragment setupFragment = new SetupFragment();
                 return setupFragment;
             default:

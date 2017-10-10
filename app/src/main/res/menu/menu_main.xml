@@ -3,14 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.honza.aeonsend.MainActivity">
     <item
-        android:id="@+id/action_switch_layout"
+        android:id="@+id/main_menu_action_switch_layout"
         android:icon="@mipmap/ic_view_headline_white_24dp"
         android:orderInCategory="100"
         android:title="@string/action_layout"
         app:showAsAction="ifRoom" />
 
     <item
-        android:id="@+id/action_num_players"
+        android:id="@+id/main_menu_action_num_players"
         app:actionLayout="@layout/menu_item_number_players"
         android:title="@string/number_of_players"
         app:showAsAction="ifRoom"/>

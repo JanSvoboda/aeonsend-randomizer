@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.honza.aeonsend.R;
 import com.example.honza.aeonsend.cards.ExpansionCard;
@@ -72,6 +73,8 @@ public class ExpansionFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.expansion_fragment, container, false);
 
+        final TextView selectedSummaryTextView = view.findViewById(R.id.expansion_fragment_selected_expansions_summary);
+        selectedSummaryTextView.setText(getTextSummary());
         final ImageView depthsImageView = view.findViewById(R.id.expansion_fragment_depths_imageview);
         final ImageView namelessImageView = view.findViewById(R.id.expansion_fragment_nameless_imageview);
 
@@ -95,6 +98,7 @@ public class ExpansionFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 selectExpansion(depthsExpansionCard, depthsCheckboxImageView);
+                selectedSummaryTextView.setText(getTextSummary());
             }
         });
 
@@ -119,6 +123,7 @@ public class ExpansionFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 selectExpansion(namelessExpansionCard, namelessCheckboxImageView);
+                selectedSummaryTextView.setText(getTextSummary());
             }
         });
 
@@ -158,5 +163,17 @@ public class ExpansionFragment extends Fragment {
 
     private void passData(List list) {
         dataPasser.onDataPass(Constants.EXTRASSELECTEDEXPANSION, list);
+    }
+
+    private String getTextSummary() {
+        switch (expansionList.size()) {
+            case 1:
+                return "NONE (Pull me)";
+            case 2:
+                return String.valueOf(expansionList.get(1).name());
+            case 3:
+                return expansionList.get(1) + ", " + expansionList.get(2);
+        }
+        return null;
     }
 }

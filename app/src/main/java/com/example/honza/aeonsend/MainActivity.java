@@ -2,14 +2,17 @@ package com.example.honza.aeonsend;
 
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.honza.aeonsend.cards.MarketSetupCard;
@@ -28,6 +31,8 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
     private ViewPager viewPager;
     private Bundle bundle = new Bundle();
     private TextView numPlayersTextMenu;
+    private FragmentManager fm = getSupportFragmentManager();
+    private BottomSheetBehavior bottomSheetBehavior;
 
 
     @Override
@@ -46,7 +51,7 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         tabLayout = (TabLayout) findViewById(R.id.tabLayout_main);
 
         tabLayout.addTab(tabLayout.newTab().setText("Players"));
-        tabLayout.addTab(tabLayout.newTab().setText("Expansions"));
+//        tabLayout.addTab(tabLayout.newTab().setText("Expansions"));
         tabLayout.addTab(tabLayout.newTab().setText("Setup"));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
@@ -65,17 +70,44 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         //Adding onPageChangeListener to select tab after swipe
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
+        adjustLinearLayoutSize();
+
+        bottomSheetBehavior = BottomSheetBehavior.from(findViewById(R.id.include_expansion_fragment));
+        findViewById(R.id.include_expansion_fragment).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_COLLAPSED) {
+                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                } else if (bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
+                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                }
+            }
+        });
+
+    }
+
+    private void adjustLinearLayoutSize() {
+        LinearLayout layout = (LinearLayout) findViewById(R.id.activity_main_linear_layout);
+//        layout.getLayoutParams().height = layout.getParent().
+
     }
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        final MenuItem numPlayersMenuItem = menu.findItem(R.id.action_num_players);
+        final MenuItem numPlayersMenuItem = menu.findItem(R.id.main_menu_action_num_players);
 
         FrameLayout rootItemMenuView = (FrameLayout) numPlayersMenuItem.getActionView();
         numPlayersTextMenu = rootItemMenuView.findViewById(R.id.menu_item_number_players_text);
 
         int numPlayers = bundle.getInt(Constants.EXTRASNUMPLAYERS);
         numPlayersTextMenu.setText(String.valueOf(numPlayers));
+
+//        rootItemMenuView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                onOptionsItemSelected(numPlayersMenuItem);
+//            }
+//        });
 
         return super.onPrepareOptionsMenu(menu);
     }
@@ -84,13 +116,29 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
         getMenuInflater().inflate(R.menu.menu_main, menu);
-        MenuItem switchLayout = menu.findItem(R.id.action_switch_layout);
+        MenuItem switchLayout = menu.findItem(R.id.main_menu_action_switch_layout);
         switchLayout.setVisible(false);
+
+//        numPlayers.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+//            @Override
+//            public boolean onMenuItemClick(MenuItem item) {
+//                expansionBottomSheetFragment.show(fm, "bottom_sheet");
+//                return true;
+//            }
+//        });
 
         return true;
     }
 
-
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        int id = item.getItemId();
+//
+//        if (id == R.id.main_menu_action_num_players) {
+//            return true;
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -143,4 +191,5 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
     public void onPlayersChange(int number) {
         numPlayersTextMenu.setText(String.valueOf(number));
     }
+
 }
