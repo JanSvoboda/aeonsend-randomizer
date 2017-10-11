@@ -50,28 +50,6 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         mDatabase.close();
         mHandler.close();
 
-        tabLayout = (TabLayout) findViewById(R.id.tabLayout_main);
-
-        tabLayout.addTab(tabLayout.newTab().setText("Players"));
-//        tabLayout.addTab(tabLayout.newTab().setText("Expansions"));
-        tabLayout.addTab(tabLayout.newTab().setText("Setup"));
-        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-
-        //Initializing viewPager
-        viewPager = (ViewPager) findViewById(R.id.pager_main);
-
-        //Creating our pager adapter
-        MainPager adapter = new MainPager(getSupportFragmentManager(), tabLayout.getTabCount());
-
-        //Adding adapter to pager
-        viewPager.setAdapter(adapter);
-
-        //Adding onTabSelectedListener to swipe views
-        tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(viewPager));
-
-        //Adding onPageChangeListener to select tab after swipe
-        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-
         mBottomSheetBehavior = BottomSheetBehavior.from(findViewById(R.id.include_expansion_fragment));
         findViewById(R.id.include_expansion_fragment).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,6 +72,9 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         numPlayersTextMenu = rootItemMenuView.findViewById(R.id.menu_item_number_players_text);
 
         int numPlayers = bundle.getInt(Constants.EXTRASNUMPLAYERS);
+        if (numPlayers == 0) {
+            numPlayers = 4;
+        }
         numPlayersTextMenu.setText(String.valueOf(numPlayers));
 
         rootItemMenuView.setOnClickListener(new View.OnClickListener() {

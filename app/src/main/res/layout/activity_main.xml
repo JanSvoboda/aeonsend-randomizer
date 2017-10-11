@@ -8,7 +8,7 @@
         android:id="@+id/activity_main_linear_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="50dp"
+        android:layout_marginBottom="49dp"
         android:orientation="vertical">
 
         <android.support.design.widget.AppBarLayout
@@ -25,16 +25,10 @@
 
         </android.support.design.widget.AppBarLayout>
 
-        <android.support.design.widget.TabLayout
-            android:id="@+id/tabLayout_main"
+        <fragment
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:theme="@style/AppTheme.PopupOverlay" />
-
-        <android.support.v4.view.ViewPager
-            android:id="@+id/pager_main"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:name="com.example.honza.aeonsend.fragments.SetupFragment" />
 
     </LinearLayout>
 
