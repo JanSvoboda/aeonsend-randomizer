@@ -1,7 +1,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.example.honza.aeonsend.MainActivity">
+    tools:context="com.games.boardgames.aeonsend.MainActivity">
     <item
         android:id="@+id/main_menu_action_switch_layout"
         android:icon="@mipmap/ic_view_headline_white_24dp"
