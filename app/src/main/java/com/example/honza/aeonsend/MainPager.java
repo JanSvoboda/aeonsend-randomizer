@@ -4,11 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import com.example.honza.aeonsend.fragments.CharactersFragment;
-import com.example.honza.aeonsend.fragments.ExpansionFragment;
-import com.example.honza.aeonsend.fragments.MarketFragment;
-import com.example.honza.aeonsend.fragments.NemesisFragment;
-import com.example.honza.aeonsend.fragments.PlayersFragment;
+import com.example.honza.aeonsend.fragments.PlayersBottomSheetDialogFragment;
 import com.example.honza.aeonsend.fragments.SetupFragment;
 
 /**
@@ -34,10 +30,10 @@ public class MainPager extends FragmentStatePagerAdapter {
         //Returning the current tabs
         switch (position) {
             case 0:
-                PlayersFragment playersFragment = new PlayersFragment();
-                return playersFragment;
+                PlayersBottomSheetDialogFragment playersBottomSheetDialogFragment = new PlayersBottomSheetDialogFragment();
+                return playersBottomSheetDialogFragment;
 //            case 1:
-////                PlayersFragment playersFragment2 = new PlayersFragment();
+////                PlayersBottomSheetDialogFragment playersFragment2 = new PlayersBottomSheetDialogFragment();
 ////                return playersFragment2;
 //                ExpansionFragment expansionFragment = new ExpansionFragment();
 //                return expansionFragment;

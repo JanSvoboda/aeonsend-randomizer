@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.example.honza.aeonsend.cards.MarketSetupCard;
 import com.example.honza.aeonsend.database.DatabaseHandler;
+import com.example.honza.aeonsend.fragments.PlayersBottomSheetDialogFragment;
 import com.example.honza.aeonsend.utils.Constants;
 import com.example.honza.aeonsend.utils.OnDataPass;
 import com.example.honza.aeonsend.utils.OnPlayersChange;
@@ -32,7 +33,8 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
     private Bundle bundle = new Bundle();
     private TextView numPlayersTextMenu;
     private FragmentManager fm = getSupportFragmentManager();
-    private BottomSheetBehavior bottomSheetBehavior;
+    private BottomSheetBehavior mBottomSheetBehavior;
+    private PlayersBottomSheetDialogFragment mPlayersBottomSheetFragment = new PlayersBottomSheetDialogFragment();
 
 
     @Override
@@ -70,25 +72,17 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         //Adding onPageChangeListener to select tab after swipe
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
-        adjustLinearLayoutSize();
-
-        bottomSheetBehavior = BottomSheetBehavior.from(findViewById(R.id.include_expansion_fragment));
+        mBottomSheetBehavior = BottomSheetBehavior.from(findViewById(R.id.include_expansion_fragment));
         findViewById(R.id.include_expansion_fragment).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_COLLAPSED) {
-                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-                } else if (bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
-                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                if (mBottomSheetBehavior.getState() == BottomSheetBehavior.STATE_COLLAPSED) {
+                    mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                } else if (mBottomSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
+                    mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
                 }
             }
         });
-
-    }
-
-    private void adjustLinearLayoutSize() {
-        LinearLayout layout = (LinearLayout) findViewById(R.id.activity_main_linear_layout);
-//        layout.getLayoutParams().height = layout.getParent().
 
     }
 
@@ -102,12 +96,12 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         int numPlayers = bundle.getInt(Constants.EXTRASNUMPLAYERS);
         numPlayersTextMenu.setText(String.valueOf(numPlayers));
 
-//        rootItemMenuView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                onOptionsItemSelected(numPlayersMenuItem);
-//            }
-//        });
+        rootItemMenuView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onOptionsItemSelected(numPlayersMenuItem);
+            }
+        });
 
         return super.onPrepareOptionsMenu(menu);
     }
@@ -119,26 +113,28 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         MenuItem switchLayout = menu.findItem(R.id.main_menu_action_switch_layout);
         switchLayout.setVisible(false);
 
-//        numPlayers.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-//            @Override
-//            public boolean onMenuItemClick(MenuItem item) {
-//                expansionBottomSheetFragment.show(fm, "bottom_sheet");
-//                return true;
-//            }
-//        });
-
         return true;
     }
 
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        int id = item.getItemId();
-//
-//        if (id == R.id.main_menu_action_num_players) {
-//            return true;
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.main_menu_action_num_players) {
+            mPlayersBottomSheetFragment.show(fm, "players_bottom_sheet_dialog_fragment");
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (mBottomSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
+            mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+        } else {
+            super.onBackPressed();
+        }
+    }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {

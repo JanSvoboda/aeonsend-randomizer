@@ -1,9 +1,11 @@
 package com.example.honza.aeonsend.fragments;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import android.support.design.widget.BottomSheetDialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,13 +21,12 @@ import com.example.honza.aeonsend.utils.OnPlayersChange;
  * Created by honza on 29.9.17.
  */
 
-public class PlayersFragment extends Fragment {
+public class PlayersBottomSheetDialogFragment extends BottomSheetDialogFragment {
 
     private TextView textView;
     private ImageView subtractImageView;
     private ImageView addImageView;
     private int numPlayers;
-    private Bundle args;
     private OnDataPass dataPasser;
     private OnPlayersChange playerChanger;
 
@@ -34,6 +35,7 @@ public class PlayersFragment extends Fragment {
         super.onAttach(context);
         dataPasser = (OnDataPass) context;
         playerChanger = (OnPlayersChange) context;
+        numPlayers = dataPasser.getFragmentValuesBundle().getInt(Constants.EXTRASNUMPLAYERS);
     }
 
     @Nullable
@@ -41,11 +43,13 @@ public class PlayersFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         if (savedInstanceState == null) {
-            numPlayers = 4;
+            if (numPlayers == 0) {
+                numPlayers = 4;
+            }
         } else {
             numPlayers = savedInstanceState.getInt("numPlayers");
-
         }
+
         // Pass number of PLayers to parent Activity
         passData(numPlayers);
 
@@ -93,7 +97,18 @@ public class PlayersFragment extends Fragment {
         outState.putInt("numPlayers", numPlayers);
     }
 
+
+    @Override
+    public void onDismiss(DialogInterface dialog) {
+        super.onDismiss(dialog);
+    }
+
     public void passData(int numPlayers) {
         dataPasser.onDataPass(Constants.EXTRASNUMPLAYERS, numPlayers);
+    }
+
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        return super.onCreateDialog(savedInstanceState);
     }
 }
