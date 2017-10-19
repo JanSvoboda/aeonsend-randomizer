@@ -73,6 +73,7 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         int numPlayers = bundle.getInt(Constants.EXTRASNUMPLAYERS);
         if (numPlayers == 0) {
             numPlayers = 4;
+            onDataPass(Constants.EXTRASNUMPLAYERS, numPlayers);
         }
         numPlayersTextMenu.setText(String.valueOf(numPlayers));
 
