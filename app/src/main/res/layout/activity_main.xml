@@ -28,13 +28,13 @@
         <fragment
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:name="com.games.boardgames.aeonsendfragments.SetupFragment" />
+            android:name="com.games.boardgames.aeonsend.fragments.SetupFragment" />
 
     </LinearLayout>
 
     <fragment xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/include_expansion_fragment"
-        android:name="com.games.boardgames.aeonsendfragments.ExpansionFragment"
+        android:name="com.games.boardgames.aeonsend.fragments.ExpansionFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:behavior_hideable="false"
