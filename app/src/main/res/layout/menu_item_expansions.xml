@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="@dimen/menu_item_size"
+    android:layout_height="@dimen/menu_item_size">
+
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="42dp"
+        android:layout_height="28dp"
+        android:layout_gravity="center">
+
+        <TextView
+            android:id="@+id/menu_item_expansions"
+            android:text="EXP"
+            android:textAllCaps="true"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textColor="@android:color/white"/>
+
+        <TextView
+            android:id="@+id/menu_item_expansions_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|left"
+            android:layout_marginEnd="4dp"
+            android:layout_marginRight="4dp"
+            android:text="4"
+            android:textColor="@android:color/white"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+    </FrameLayout>
+</FrameLayout>

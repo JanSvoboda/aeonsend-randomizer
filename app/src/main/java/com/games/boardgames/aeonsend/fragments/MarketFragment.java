@@ -20,6 +20,7 @@ import com.games.boardgames.aeonsend.database.DatabaseHandler;
 import com.games.boardgames.aeonsend.enums.CardType;
 import com.games.boardgames.aeonsend.enums.Expansion;
 import com.games.boardgames.aeonsend.enums.PriceRange;
+import com.games.boardgames.aeonsend.utils.Constants;
 import com.games.boardgames.aeonsend.utils.GetIntentExtras;
 
 import java.io.Serializable;
@@ -83,7 +84,7 @@ public class MarketFragment extends Fragment {
                         gridView.setAdapter(generatedMarketGridViewAdapter);
                         swipeRefreshLayout.setRefreshing(false);
                     }
-                }, 1500);
+                }, Constants.REFRESHWAIT);
             }
         });
 

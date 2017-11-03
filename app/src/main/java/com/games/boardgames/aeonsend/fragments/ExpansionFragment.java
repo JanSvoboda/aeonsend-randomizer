@@ -17,7 +17,8 @@ import com.games.boardgames.aeonsend.database.DatabaseHandler;
 import com.games.boardgames.aeonsend.enums.CardType;
 import com.games.boardgames.aeonsend.enums.Expansion;
 import com.games.boardgames.aeonsend.utils.Constants;
-import com.games.boardgames.aeonsend.utils.OnDataPass;
+import com.games.boardgames.aeonsend.listeners.OnDataPass;
+import com.games.boardgames.aeonsend.listeners.OnExpansionsChange;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -35,11 +36,13 @@ public class ExpansionFragment extends Fragment {
     private ExpansionCard namelessExpansionCard;
     private List<Expansion> expansionList = new ArrayList<>();
     private OnDataPass dataPasser;
+    private OnExpansionsChange expansionChanger;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         dataPasser = (OnDataPass) context;
+        expansionChanger = (OnExpansionsChange) context;
     }
 
     @Nullable
@@ -159,6 +162,7 @@ public class ExpansionFragment extends Fragment {
             expansionList.add(expansionCard.getExpansion());
         }
         passData(expansionList);
+        expansionChanger.onExpansionsChange(expansionList.size() - 1);
     }
 
     private void passData(List list) {

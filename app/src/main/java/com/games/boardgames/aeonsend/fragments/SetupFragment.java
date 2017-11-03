@@ -24,7 +24,7 @@ import com.games.boardgames.aeonsend.adapter.MarketListViewAdapter;
 import com.games.boardgames.aeonsend.cards.MarketSetupCard;
 import com.games.boardgames.aeonsend.database.MarketSetupCardList;
 import com.games.boardgames.aeonsend.utils.Constants;
-import com.games.boardgames.aeonsend.utils.OnDataPass;
+import com.games.boardgames.aeonsend.listeners.OnDataPass;
 
 import static android.content.Context.MODE_PRIVATE;
 

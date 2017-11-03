@@ -14,8 +14,8 @@ import android.widget.TextView;
 
 import com.games.boardgames.aeonsend.R;
 import com.games.boardgames.aeonsend.utils.Constants;
-import com.games.boardgames.aeonsend.utils.OnDataPass;
-import com.games.boardgames.aeonsend.utils.OnPlayersChange;
+import com.games.boardgames.aeonsend.listeners.OnDataPass;
+import com.games.boardgames.aeonsend.listeners.OnPlayersChange;
 
 /**
  * Created by honza on 29.9.17.

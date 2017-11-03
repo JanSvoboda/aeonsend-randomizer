@@ -8,7 +8,6 @@
         android:id="@+id/activity_main_linear_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="49dp"
         android:orientation="vertical">
 
         <android.support.design.widget.AppBarLayout
@@ -37,8 +36,7 @@
         android:name="com.games.boardgames.aeonsend.fragments.ExpansionFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:behavior_hideable="false"
-        app:behavior_peekHeight="48dp"
+        app:behavior_hideable="true"
         app:layout_behavior="@string/bottom_sheet_behavior" />
 
 </android.support.design.widget.CoordinatorLayout>

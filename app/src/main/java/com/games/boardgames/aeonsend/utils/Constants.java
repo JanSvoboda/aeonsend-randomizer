@@ -24,4 +24,7 @@ public class Constants {
     public final static String EXTRASCHOSENSETUP = "chosenSetup";
     public final static String EXTRASSELECTEDEXPANSION = "selectedExpansions";
 
+    // Refresh wait
+    public final static Integer REFRESHWAIT = 500;
+
 }

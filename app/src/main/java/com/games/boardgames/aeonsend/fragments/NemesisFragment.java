@@ -76,7 +76,7 @@ public class NemesisFragment extends Fragment {
                         // Stop showing refreshing icon
                         swipeRefreshLayout.setRefreshing(false);
                     }
-                }, 1500);
+                }, Constants.REFRESHWAIT);
             }
         });
 
